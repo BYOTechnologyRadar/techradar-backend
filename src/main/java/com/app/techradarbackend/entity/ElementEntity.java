@@ -1,4 +1,4 @@
-package entity;
+package com.app.techradarbackend.entity;
 
 import lombok.*;
 

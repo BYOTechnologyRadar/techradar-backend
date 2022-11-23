@@ -1,4 +1,4 @@
-package entity;
+package com.app.techradarbackend.entity;
 
 import lombok.*;
 
@@ -12,14 +12,13 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class CategoryEntity {
+public class RadarEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int categoryId;
-    private String categoryName;
-    private String categoryLogo;
-    private String categoryDescription;
+    private int radarId;
+    private String radarName;
+    private String radarDescription;
 
-    @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "radarEntity", cascade = CascadeType.ALL)
     private List<RadarCategoryEntity> radarCategoryEntityList;
 }
