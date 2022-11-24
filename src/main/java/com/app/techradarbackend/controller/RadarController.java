@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/techradar/api")
 public class RadarController {
     @PostMapping("/radar")
     public RadarEntity addRadarEntity(@RequestBody RadarEntity radarEntity) {

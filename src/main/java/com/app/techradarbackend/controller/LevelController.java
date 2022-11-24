@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/techradar/api")
 public class LevelController {
     @PostMapping("/level")
     public LevelEntity addLevel(@RequestBody LevelEntity levelEntity) {

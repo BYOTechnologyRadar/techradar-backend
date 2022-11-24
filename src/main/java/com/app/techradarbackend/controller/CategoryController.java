@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/techradar/api")
 public class CategoryController {
     @PostMapping("/category")
     public CategoryEntity addCategory(@RequestBody CategoryEntity categoryEntity) {

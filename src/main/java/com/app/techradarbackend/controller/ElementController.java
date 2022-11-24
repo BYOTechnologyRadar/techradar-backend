@@ -3,12 +3,12 @@ package com.app.techradarbackend.controller;
 import com.app.techradarbackend.entity.CategoryEntity;
 import com.app.techradarbackend.entity.ElementEntity;
 import com.app.techradarbackend.entity.LevelEntity;
+import com.app.techradarbackend.enums.ElementStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/techradar/api")
 public class ElementController {
 
     @PostMapping("/element")
