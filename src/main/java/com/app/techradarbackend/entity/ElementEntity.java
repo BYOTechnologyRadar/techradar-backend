@@ -1,11 +1,12 @@
 package com.app.techradarbackend.entity;
 
+import com.app.techradarbackend.enums.ElementStatus;
 import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
-@Table
+@Entity(name = "Element")
+@Table(name = "element")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,12 +18,14 @@ public class ElementEntity {
     private int elementId;
     private String elementName;
     private String elementDescription;
+    @Enumerated(EnumType.STRING)
+    private ElementStatus elementStatus;
 
     @ManyToOne
-    @JoinColumn(name = "levelId", referencedColumnName = "levelId")
+    @JoinColumn(name = "elementLevelId", referencedColumnName = "levelId")
     private LevelEntity levelEntity;
 
     @ManyToOne
-    @JoinColumn(name = "radarCategoryId", referencedColumnName = "radarCategoryId")
+    @JoinColumn(name = "elementRadarCategoryId", referencedColumnName = "radarCategoryId")
     private RadarCategoryEntity radarCategoryEntity;
 }

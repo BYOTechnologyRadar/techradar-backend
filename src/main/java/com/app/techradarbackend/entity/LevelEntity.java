@@ -5,8 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table
+@Entity(name = "Level")
+@Table(name = "level")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -20,6 +20,7 @@ public class LevelEntity {
     private String levelDescription;
 
     @OneToMany(mappedBy = "levelEntity", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<ElementEntity> elementEntityList;
 }
 

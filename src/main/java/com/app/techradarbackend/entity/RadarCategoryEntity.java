@@ -4,8 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
-@Table
+@Entity(name = "Radar Category")
+@Table(name = "radar_category")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

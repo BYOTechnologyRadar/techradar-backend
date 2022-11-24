@@ -5,8 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table
+@Entity(name = "Category")
+@Table(name = "category")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -21,5 +21,6 @@ public class CategoryEntity {
     private String categoryDescription;
 
     @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<RadarCategoryEntity> radarCategoryEntityList;
 }
