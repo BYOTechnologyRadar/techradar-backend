@@ -2,8 +2,8 @@ package com.app.techradarbackend.controller;
 
 import com.app.techradarbackend.configuration.SwaggerConfiguration;
 import com.app.techradarbackend.dto.ElementDTO;
-import com.app.techradarbackend.dto.ElementLevelUpdateDTO;
-import com.app.techradarbackend.service.LevelService;
+import com.app.techradarbackend.dto.ElementStatusUpdateDTO;
+import com.app.techradarbackend.service.StatusService;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,17 +19,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/elements")
 @AllArgsConstructor
-@Api(tags = {SwaggerConfiguration.LEVEL_TAG})
-public class LevelController {
-    private final LevelService levelService;
+@Api(tags = {SwaggerConfiguration.STATUS_TAG})
+public class StatusController {
+    private final StatusService statusService;
 
-    @PatchMapping("/{elementId}/level")
-    public ElementDTO updateElementLevel(@PathVariable Integer elementId, @Valid @RequestBody ElementLevelUpdateDTO elementLevelUpdateDTO) {
-        return levelService.updateElementLevel(elementId, elementLevelUpdateDTO);
+    @PatchMapping("/{elementId}/status")
+    public ElementDTO updateElementStatus(@PathVariable Integer elementId, @Valid @RequestBody ElementStatusUpdateDTO elementStatusUpdateDTO) {
+        return statusService.updateElementStatus(elementId, elementStatusUpdateDTO);
     }
 
-    @GetMapping("/level/{levelId}")
-    public List<ElementDTO> getAllElementsByLevelId(@PathVariable Integer levelId) {
-        return levelService.getAllElementsByLevelId(levelId);
+    @GetMapping("/status/{statusId}")
+    public List<ElementDTO> getAllElementsByStatusId(@PathVariable Integer statusId) {
+        return statusService.getAllElementsByStatusId(statusId);
     }
 }
