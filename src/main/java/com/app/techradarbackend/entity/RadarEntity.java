@@ -1,25 +1,39 @@
 package com.app.techradarbackend.entity;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity(name = "Radar")
+@Data
+@Entity
 @Table(name = "radar")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
 public class RadarEntity {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int radarId;
-    private String radarName;
-    private String radarDescription;
+    private Integer id;
 
-    @OneToMany(mappedBy = "radarEntity", cascade = CascadeType.ALL)
+    @Column(name = "name")
+    private String name;
+
+    @Lob
+    @Column(name = "description")
+    private String description;
+
     @ToString.Exclude
-    private List<RadarCategoryEntity> radarCategoryEntityList;
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "radar", orphanRemoval = true, cascade = CascadeType.ALL)
+    private Set<CategoryEntity> categorySet = new HashSet<>();
 }

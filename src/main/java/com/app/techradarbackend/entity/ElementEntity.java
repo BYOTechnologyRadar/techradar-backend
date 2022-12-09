@@ -1,31 +1,52 @@
 package com.app.techradarbackend.entity;
 
+import com.app.techradarbackend.converter.LevelConverter;
+import com.app.techradarbackend.converter.StatusConverter;
+import com.app.techradarbackend.converter.VersionConverter;
+import com.app.techradarbackend.enums.ElementLevel;
 import com.app.techradarbackend.enums.ElementStatus;
-import lombok.*;
+import com.app.techradarbackend.enums.ElementVersion;
+import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-@Entity(name = "Element")
+@Data
+@Entity
 @Table(name = "element")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class ElementEntity {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int elementId;
-    private String elementName;
-    private String elementDescription;
-    @Enumerated(EnumType.STRING)
-    private ElementStatus elementStatus;
+    private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "elementLevelId", referencedColumnName = "levelId")
-    private LevelEntity levelEntity;
+    @Column(name = "name")
+    private String name;
 
+    @Lob
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "version")
+    @Convert(converter = VersionConverter.class)
+    private ElementVersion version;
+
+    @Column(name = "status")
+    @Convert(converter = StatusConverter.class)
+    private ElementStatus status;
+
+    @Column(name = "level")
+    @Convert(converter = LevelConverter.class)
+    private ElementLevel level;
     @ManyToOne
-    @JoinColumn(name = "elementRadarCategoryId", referencedColumnName = "radarCategoryId")
-    private RadarCategoryEntity radarCategoryEntity;
+    @JoinColumn(name = "ref_category")
+    private CategoryEntity category;
 }
