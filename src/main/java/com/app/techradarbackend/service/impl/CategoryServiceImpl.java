@@ -16,6 +16,7 @@ import com.app.techradarbackend.mapper.ElementMapper;
 import com.app.techradarbackend.service.CategoryService;
 import com.app.techradarbackend.service.ElementService;
 import com.querydsl.core.BooleanBuilder;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@NoArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-    private final CategoryDAO categoryDAO;
-    private final CategoryMapper categoryMapper;
-    private final ElementDAO elementDAO;
-    private final ElementService elementService;
-    private final ElementMapper elementMapper;
+    private CategoryDAO categoryDAO;
+    private CategoryMapper categoryMapper;
+    private ElementDAO elementDAO;
+    private ElementService elementService;
+    private ElementMapper elementMapper;
 
     @Autowired
     public CategoryServiceImpl(CategoryDAO categoryDAO, CategoryMapper categoryMapper, @Lazy ElementDAO elementDAO, @Lazy ElementService elementService, ElementMapper elementMapper) {

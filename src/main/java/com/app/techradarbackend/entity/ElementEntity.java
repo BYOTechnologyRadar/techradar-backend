@@ -6,7 +6,9 @@ import com.app.techradarbackend.converter.VersionConverter;
 import com.app.techradarbackend.enums.ElementLevel;
 import com.app.techradarbackend.enums.ElementStatus;
 import com.app.techradarbackend.enums.ElementVersion;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -21,6 +23,8 @@ import javax.persistence.Table;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "element")
 public class ElementEntity {
     @Id

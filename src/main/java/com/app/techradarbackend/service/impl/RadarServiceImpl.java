@@ -13,19 +13,27 @@ import com.app.techradarbackend.mapper.RadarMapper;
 import com.app.techradarbackend.service.CategoryService;
 import com.app.techradarbackend.service.RadarService;
 import com.querydsl.core.BooleanBuilder;
-import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@NoArgsConstructor
 public class RadarServiceImpl implements RadarService {
-    private final RadarDAO radarDAO;
+    private RadarDAO radarDAO;
+    private CategoryDAO categoryDAO;
+    private RadarMapper radarMapper;
+    private CategoryService categoryService;
 
-    private final CategoryDAO categoryDAO;
-    private final RadarMapper radarMapper;
-    private final CategoryService categoryService;
+    @Autowired
+    public RadarServiceImpl(RadarDAO radarDAO, CategoryDAO categoryDAO, RadarMapper radarMapper, CategoryService categoryService) {
+        this.radarDAO = radarDAO;
+        this.categoryDAO = categoryDAO;
+        this.radarMapper = radarMapper;
+        this.categoryService = categoryService;
+    }
 
     @Override
     public RadarDTO createRadar(RadarCreateAndUpdateDTO radarCreateAndUpdateDTO, List<Integer> categoryIdList) {

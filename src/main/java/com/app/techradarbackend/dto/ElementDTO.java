@@ -10,8 +10,8 @@ public class ElementDTO {
     private Integer id;
     private String name;
     private String description;
+    private ElementVersion version;
     private ElementStatus status;
     private ElementLevel level;
-    private ElementVersion version;
     private CategoryDTO category;
 }
