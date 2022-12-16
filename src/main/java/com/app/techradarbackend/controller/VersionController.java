@@ -6,6 +6,7 @@ import com.app.techradarbackend.dto.ElementVersionUpdateDTO;
 import com.app.techradarbackend.service.VersionService;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequestMapping("/elements")
 @AllArgsConstructor
 @Api(tags = {SwaggerConfiguration.VERSION_TAG})
+@CrossOrigin(origins = "http://localhost:4200")
 public class VersionController {
     private final VersionService versionService;
 

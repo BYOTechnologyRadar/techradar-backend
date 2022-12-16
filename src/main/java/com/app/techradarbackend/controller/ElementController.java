@@ -8,6 +8,7 @@ import com.app.techradarbackend.dto.ElementUpdateDTO;
 import com.app.techradarbackend.service.ElementService;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import java.util.List;
 @RequestMapping("/elements")
 @AllArgsConstructor
 @Api(tags = {SwaggerConfiguration.ELEMENT_TAG})
+@CrossOrigin(origins = "http://localhost:4200")
 public class ElementController {
     private final ElementService elementService;
 
@@ -42,7 +44,7 @@ public class ElementController {
         return elementService.getElementByElementId(elementId);
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public List<ElementDTO> searchElementByElementName(@Valid @RequestBody ElementSearchDTO elementSearchDTO) {
         return elementService.searchElementByElementName(elementSearchDTO);
     }
