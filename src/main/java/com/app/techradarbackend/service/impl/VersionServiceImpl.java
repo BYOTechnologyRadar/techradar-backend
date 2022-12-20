@@ -24,7 +24,7 @@ public class VersionServiceImpl implements VersionService {
 
     @Override
     public ElementDTO updateElementVersion(Integer elementId, ElementVersionUpdateDTO elementVersionUpdateDTO) {
-        ElementEntity element = elementService.getByElementId(elementId);
+        ElementEntity element = elementService.getById(elementId);
         ElementVersion version = elementVersionUpdateDTO.getVersion();
         element.setVersion(version);
         elementMapper.mapVersionPatchDTOToEntity(elementVersionUpdateDTO, element);

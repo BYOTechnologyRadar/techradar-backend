@@ -3,9 +3,8 @@ package com.app.techradarbackend.controller;
 import com.app.techradarbackend.configuration.SwaggerConfiguration;
 import com.app.techradarbackend.dto.CategoryCreateAndUpdateDTO;
 import com.app.techradarbackend.dto.CategoryDTO;
+import com.app.techradarbackend.dto.CategoryRadarUpdateDTO;
 import com.app.techradarbackend.dto.CategorySearchDTO;
-import com.app.techradarbackend.dto.ElementCategoryUpdateDTO;
-import com.app.techradarbackend.dto.ElementDTO;
 import com.app.techradarbackend.service.CategoryService;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -35,20 +34,19 @@ public class CategoryController {
         return categoryService.addCategory(categoryCreateDTO);
     }
 
+    @PatchMapping("/{categoryId}")
+    CategoryDTO addRadarToCategory(@PathVariable Integer categoryId, @Valid @RequestBody CategoryRadarUpdateDTO categoryRadarUpdateDTO) {
+        return categoryService.addRadarToCategory(categoryId, categoryRadarUpdateDTO);
+    }
+
     @PutMapping("/{categoryId}")
     public CategoryDTO updateCategory(@PathVariable Integer categoryId, @Valid @RequestBody CategoryCreateAndUpdateDTO categoryUpdateDTO) {
         return categoryService.updateCategory(categoryId, categoryUpdateDTO);
     }
 
-    @PatchMapping("/element/{elementId}")
-    ElementDTO updateElementCategory(@PathVariable Integer elementId, @Valid @RequestBody ElementCategoryUpdateDTO elementCategoryUpdateDTO) {
-        return categoryService.updateElementCategory(elementId, elementCategoryUpdateDTO);
-    }
-
-
     @GetMapping("/{categoryId}")
-    public CategoryDTO getCategoryByCategoryId(@PathVariable Integer categoryId) {
-        return categoryService.getCategoryByCategoryId(categoryId);
+    public CategoryDTO getCategoryById(@PathVariable Integer categoryId) {
+        return categoryService.getCategoryById(categoryId);
     }
 
     @GetMapping
@@ -56,18 +54,18 @@ public class CategoryController {
         return categoryService.getAllCategories();
     }
 
-    @PostMapping("/search")
-    public List<CategoryDTO> searchCategoriesByCategoryName(@Valid @RequestBody CategorySearchDTO categorySearchDTO) {
-        return categoryService.searchCategoriesByCategoryName(categorySearchDTO);
+    @GetMapping("/radar/{radarId}")
+    List<CategoryDTO> getAllCategoriesByRadarId(@PathVariable int radarId) {
+        return categoryService.getAllCategoriesByRadarId(radarId);
     }
 
-    @GetMapping("/{categoryId}/elements")
-    List<ElementDTO> getAllElementsByCategoryId(@PathVariable Integer categoryId) {
-        return categoryService.getAllElementsByCategoryId(categoryId);
+    @PostMapping("/search")
+    public List<CategoryDTO> searchCategoriesByName(@Valid @RequestBody CategorySearchDTO categorySearchDTO) {
+        return categoryService.searchCategoriesByName(categorySearchDTO);
     }
 
     @DeleteMapping("/{categoryId}")
-    public void deleteCategory(@PathVariable Integer categoryId) {
-        categoryService.deleteCategory(categoryId);
+    public void deleteCategoryById(@PathVariable Integer categoryId) {
+        categoryService.deleteCategoryById(categoryId);
     }
 }

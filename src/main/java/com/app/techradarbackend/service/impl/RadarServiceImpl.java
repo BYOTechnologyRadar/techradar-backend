@@ -1,16 +1,13 @@
 package com.app.techradarbackend.service.impl;
 
-import com.app.techradarbackend.dao.CategoryDAO;
 import com.app.techradarbackend.dao.RadarDAO;
 import com.app.techradarbackend.dto.RadarCreateAndUpdateDTO;
 import com.app.techradarbackend.dto.RadarDTO;
 import com.app.techradarbackend.dto.RadarSearchDTO;
-import com.app.techradarbackend.entity.CategoryEntity;
 import com.app.techradarbackend.entity.QRadarEntity;
 import com.app.techradarbackend.entity.RadarEntity;
 import com.app.techradarbackend.exception.ResourceNotFoundException;
 import com.app.techradarbackend.mapper.RadarMapper;
-import com.app.techradarbackend.service.CategoryService;
 import com.app.techradarbackend.service.RadarService;
 import com.querydsl.core.BooleanBuilder;
 import lombok.NoArgsConstructor;
@@ -23,45 +20,35 @@ import java.util.List;
 @NoArgsConstructor
 public class RadarServiceImpl implements RadarService {
     private RadarDAO radarDAO;
-    private CategoryDAO categoryDAO;
     private RadarMapper radarMapper;
-    private CategoryService categoryService;
-
     @Autowired
-    public RadarServiceImpl(RadarDAO radarDAO, CategoryDAO categoryDAO, RadarMapper radarMapper, CategoryService categoryService) {
+    public RadarServiceImpl(RadarDAO radarDAO, RadarMapper radarMapper) {
         this.radarDAO = radarDAO;
-        this.categoryDAO = categoryDAO;
         this.radarMapper = radarMapper;
-        this.categoryService = categoryService;
     }
 
     @Override
-    public RadarDTO createRadar(RadarCreateAndUpdateDTO radarCreateAndUpdateDTO, List<Integer> categoryIdList) {
-        RadarEntity radar = radarMapper.mapCreateDTOToEntity(radarCreateAndUpdateDTO);
+    public RadarDTO createRadar(RadarCreateAndUpdateDTO radarCreateDTO) {
+        RadarEntity radar = radarMapper.mapCreateDTOToEntity(radarCreateDTO);
         radar = radarDAO.save(radar);
-        for (Integer categoryId : categoryIdList) {
-            CategoryEntity category = categoryService.getByCategoryId(categoryId);
-            category.setRadar(radar);
-            categoryDAO.save(category);
-        }
         return radarMapper.mapEntityToDTO(radar);
     }
 
     @Override
-    public RadarDTO updateRadar(int radarId, RadarCreateAndUpdateDTO radarCreateAndUpdateDTO) {
-        RadarEntity radar = getByRadarId(radarId);
-        radarMapper.mapUpdateDTOToEntity(radarCreateAndUpdateDTO, radar);
+    public RadarDTO updateRadar(int radarId, RadarCreateAndUpdateDTO radarUpdateDTO) {
+        RadarEntity radar = getById(radarId);
+        radarMapper.mapUpdateDTOToEntity(radarUpdateDTO, radar);
         return radarMapper.mapEntityToDTO(radarDAO.save(radar));
     }
 
     @Override
-    public RadarDTO getRadarByRadarId(int radarId) {
-        RadarEntity radar = getByRadarId(radarId);
+    public RadarDTO getRadarById(int radarId) {
+        RadarEntity radar = getById(radarId);
         return radarMapper.mapEntityToDTO(radar);
     }
 
     @Override
-    public RadarEntity getByRadarId(int radarId) {
+    public RadarEntity getById(int radarId) {
         return radarDAO.findById(radarId).orElseThrow(
                 () -> new ResourceNotFoundException("Radar", "ID", radarId));
     }
@@ -73,7 +60,7 @@ public class RadarServiceImpl implements RadarService {
     }
 
     @Override
-    public List<RadarDTO> searchRadarsByRadarName(RadarSearchDTO radarSearchDTO) {
+    public List<RadarDTO> searchRadarsByName(RadarSearchDTO radarSearchDTO) {
         BooleanBuilder booleanBuilder = booleanBuilderForRadarSearch(radarSearchDTO);
         List<RadarEntity> radarList = (List<RadarEntity>) radarDAO.findAll(booleanBuilder);
         return radarMapper.mapEntityListToDTOList(radarList);
@@ -89,8 +76,8 @@ public class RadarServiceImpl implements RadarService {
     }
 
     @Override
-    public void deleteRadarByRadarId(int radarId) {
-        if (getByRadarId(radarId) != null) {
+    public void deleteRadarById(int radarId) {
+        if (getById(radarId) != null) {
             radarDAO.deleteById(radarId);
         }
     }

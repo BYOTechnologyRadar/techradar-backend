@@ -29,18 +29,18 @@ public class RadarController {
     private final RadarService radarService;
 
     @PostMapping
-    public RadarDTO createRadar(@Valid @RequestBody List<Integer> categoryIdList, RadarCreateAndUpdateDTO radarCreateAndUpdateDTO) {
-        return radarService.createRadar(radarCreateAndUpdateDTO, categoryIdList);
+    public RadarDTO createRadar(@Valid @RequestBody RadarCreateAndUpdateDTO radarCreateDTO) {
+        return radarService.createRadar(radarCreateDTO);
     }
 
     @PutMapping("/{radarId}")
-    public RadarDTO updateRadar(@PathVariable Integer radarId, @Valid @RequestBody RadarCreateAndUpdateDTO radarCreateAndUpdateDTO) {
-        return radarService.updateRadar(radarId, radarCreateAndUpdateDTO);
+    public RadarDTO updateRadar(@PathVariable Integer radarId, @Valid @RequestBody RadarCreateAndUpdateDTO radarUpdateDTO) {
+        return radarService.updateRadar(radarId, radarUpdateDTO);
     }
 
     @GetMapping("/{radarId}")
-    public RadarDTO getRadarByRadarId(@PathVariable Integer radarId) {
-        return radarService.getRadarByRadarId(radarId);
+    public RadarDTO getRadarById(@PathVariable Integer radarId) {
+        return radarService.getRadarById(radarId);
     }
 
     @GetMapping
@@ -49,12 +49,12 @@ public class RadarController {
     }
 
     @PostMapping("/search")
-    public List<RadarDTO> searchRadarsByRadarName(@Valid @RequestBody RadarSearchDTO radarSearchDTO) {
-        return radarService.searchRadarsByRadarName(radarSearchDTO);
+    public List<RadarDTO> searchRadarsByName(@Valid @RequestBody RadarSearchDTO radarSearchDTO) {
+        return radarService.searchRadarsByName(radarSearchDTO);
     }
 
     @DeleteMapping
-    public void deleteRadarByRadarId(Integer radarId) {
-        radarService.deleteRadarByRadarId(radarId);
+    public void deleteRadarById(Integer radarId) {
+        radarService.deleteRadarById(radarId);
     }
 }

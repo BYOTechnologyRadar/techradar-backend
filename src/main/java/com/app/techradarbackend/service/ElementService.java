@@ -1,5 +1,6 @@
 package com.app.techradarbackend.service;
 
+import com.app.techradarbackend.dto.ElementCategoryUpdateDTO;
 import com.app.techradarbackend.dto.ElementCreateDTO;
 import com.app.techradarbackend.dto.ElementDTO;
 import com.app.techradarbackend.dto.ElementSearchDTO;
@@ -13,13 +14,17 @@ public interface ElementService {
 
     ElementDTO updateElement(int elementId, ElementUpdateDTO elementUpdateDTO);
 
-    ElementDTO getElementByElementId(int elementId);
+    ElementDTO getElementById(int elementId);
 
-    ElementEntity getByElementId(int elementId);
+    ElementEntity getById(int elementId);
 
-    List<ElementDTO> searchElementByElementName(ElementSearchDTO elementSearchDTO);
+    ElementDTO updateElementCategory(int elementId, ElementCategoryUpdateDTO elementCategoryUpdateDTO);
+
+    List<ElementDTO> searchElementByName(ElementSearchDTO elementSearchDTO);
 
     List<ElementDTO> getAllElements();
 
-    void deleteElementByElementId(int elementId);
+    List<ElementDTO> getAllElementsByCategoryId(int categoryId);
+
+    void deleteElementById(int elementId);
 }

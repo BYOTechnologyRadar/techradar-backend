@@ -24,7 +24,7 @@ public class StatusServiceImpl implements StatusService {
 
     @Override
     public ElementDTO updateElementStatus(int elementId, ElementStatusUpdateDTO elementStatusUpdateDTO) {
-        ElementEntity element = elementService.getByElementId(elementId);
+        ElementEntity element = elementService.getById(elementId);
         ElementStatus status = elementStatusUpdateDTO.getStatus();
         element.setStatus(status);
         elementMapper.mapStatusPatchDTOToEntity(elementStatusUpdateDTO, element);

@@ -1,6 +1,7 @@
 package com.app.techradarbackend.controller;
 
 import com.app.techradarbackend.configuration.SwaggerConfiguration;
+import com.app.techradarbackend.dto.ElementCategoryUpdateDTO;
 import com.app.techradarbackend.dto.ElementCreateDTO;
 import com.app.techradarbackend.dto.ElementDTO;
 import com.app.techradarbackend.dto.ElementSearchDTO;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -40,13 +42,18 @@ public class ElementController {
     }
 
     @GetMapping("/{elementId}")
-    public ElementDTO getElementByElementId(@PathVariable int elementId) {
-        return elementService.getElementByElementId(elementId);
+    public ElementDTO getElementById(@PathVariable int elementId) {
+        return elementService.getElementById(elementId);
+    }
+
+    @PatchMapping("/element/{elementId}")
+    ElementDTO updateElementCategory(@PathVariable Integer elementId, @Valid @RequestBody ElementCategoryUpdateDTO elementCategoryUpdateDTO) {
+        return elementService.updateElementCategory(elementId, elementCategoryUpdateDTO);
     }
 
     @PostMapping("/search")
-    public List<ElementDTO> searchElementByElementName(@Valid @RequestBody ElementSearchDTO elementSearchDTO) {
-        return elementService.searchElementByElementName(elementSearchDTO);
+    public List<ElementDTO> searchElementByName(@Valid @RequestBody ElementSearchDTO elementSearchDTO) {
+        return elementService.searchElementByName(elementSearchDTO);
     }
 
     @GetMapping
@@ -54,8 +61,12 @@ public class ElementController {
         return elementService.getAllElements();
     }
 
+    @GetMapping("/category/{categoryId}")
+    List<ElementDTO> getAllElementsByCategoryId(@PathVariable Integer categoryId) {
+        return elementService.getAllElementsByCategoryId(categoryId);
+    }
     @DeleteMapping("/{elementId}")
     public void deleteElementByElementId(@PathVariable int elementId) {
-        elementService.deleteElementByElementId(elementId);
+        elementService.deleteElementById(elementId);
     }
 }

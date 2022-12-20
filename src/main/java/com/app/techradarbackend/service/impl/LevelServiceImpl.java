@@ -24,7 +24,7 @@ public class LevelServiceImpl implements LevelService {
 
     @Override
     public ElementDTO updateElementLevel(int elementId, ElementLevelUpdateDTO elementLevelUpdateDTO) {
-        ElementEntity element = elementService.getByElementId(elementId);
+        ElementEntity element = elementService.getById(elementId);
         ElementLevel level = elementLevelUpdateDTO.getLevel();
         element.setLevel(level);
         elementMapper.mapLevelPatchDTOToEntity(elementLevelUpdateDTO, element);

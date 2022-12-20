@@ -8,17 +8,17 @@ import com.app.techradarbackend.entity.RadarEntity;
 import java.util.List;
 
 public interface RadarService {
-    RadarDTO createRadar(RadarCreateAndUpdateDTO radarCreateAndUpdateDTO, List<Integer> categoryIdList);
+    RadarDTO createRadar(RadarCreateAndUpdateDTO radarCreateDTO);
 
-    RadarDTO updateRadar(int radarId, RadarCreateAndUpdateDTO radarCreateAndUpdateDTO);
+    RadarDTO updateRadar(int radarId, RadarCreateAndUpdateDTO radarUpdateDTO);
 
-    RadarDTO getRadarByRadarId(int radarId);
+    RadarDTO getRadarById(int radarId);
 
-    RadarEntity getByRadarId(int radarId);
+    RadarEntity getById(int radarId);
 
     List<RadarDTO> getAllRadars();
 
-    List<RadarDTO> searchRadarsByRadarName(RadarSearchDTO radarSearchDTO);
+    List<RadarDTO> searchRadarsByName(RadarSearchDTO radarSearchDTO);
 
-    void deleteRadarByRadarId(int radarId);
+    void deleteRadarById(int radarId);
 }

@@ -1,24 +1,20 @@
 package com.app.techradarbackend.service.impl;
 
 import com.app.techradarbackend.dao.CategoryDAO;
-import com.app.techradarbackend.dao.ElementDAO;
 import com.app.techradarbackend.dto.CategoryCreateAndUpdateDTO;
 import com.app.techradarbackend.dto.CategoryDTO;
+import com.app.techradarbackend.dto.CategoryRadarUpdateDTO;
 import com.app.techradarbackend.dto.CategorySearchDTO;
-import com.app.techradarbackend.dto.ElementCategoryUpdateDTO;
-import com.app.techradarbackend.dto.ElementDTO;
 import com.app.techradarbackend.entity.CategoryEntity;
-import com.app.techradarbackend.entity.ElementEntity;
 import com.app.techradarbackend.entity.QCategoryEntity;
+import com.app.techradarbackend.entity.RadarEntity;
 import com.app.techradarbackend.exception.ResourceNotFoundException;
 import com.app.techradarbackend.mapper.CategoryMapper;
-import com.app.techradarbackend.mapper.ElementMapper;
 import com.app.techradarbackend.service.CategoryService;
-import com.app.techradarbackend.service.ElementService;
+import com.app.techradarbackend.service.RadarService;
 import com.querydsl.core.BooleanBuilder;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,17 +24,12 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
     private CategoryDAO categoryDAO;
     private CategoryMapper categoryMapper;
-    private ElementDAO elementDAO;
-    private ElementService elementService;
-    private ElementMapper elementMapper;
-
+    private RadarService radarService;
     @Autowired
-    public CategoryServiceImpl(CategoryDAO categoryDAO, CategoryMapper categoryMapper, @Lazy ElementDAO elementDAO, @Lazy ElementService elementService, ElementMapper elementMapper) {
+    public CategoryServiceImpl(CategoryDAO categoryDAO, CategoryMapper categoryMapper, RadarService radarService) {
         this.categoryDAO = categoryDAO;
         this.categoryMapper = categoryMapper;
-        this.elementDAO = elementDAO;
-        this.elementService = elementService;
-        this.elementMapper = elementMapper;
+        this.radarService = radarService;
     }
 
     @Override
@@ -48,15 +39,24 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public CategoryDTO addRadarToCategory(Integer categoryId, CategoryRadarUpdateDTO categoryRadarUpdateDTO) {
+        CategoryEntity category = getById(categoryId);
+        RadarEntity radar = radarService.getById(categoryRadarUpdateDTO.getRadarId());
+        category.setRadar(radar);
+        categoryMapper.mapRadarPatchDTOToEntity(categoryRadarUpdateDTO, category);
+        return categoryMapper.mapEntityToDTO(categoryDAO.save(category));
+    }
+
+    @Override
     public CategoryDTO updateCategory(int categoryId, CategoryCreateAndUpdateDTO categoryUpdateDTO) {
-        CategoryEntity category = getByCategoryId(categoryId);
+        CategoryEntity category = getById(categoryId);
         categoryMapper.mapUpdateDTOToEntity(categoryUpdateDTO, category);
         return categoryMapper.mapEntityToDTO(categoryDAO.save(category));
     }
 
     @Override
-    public CategoryDTO getCategoryByCategoryId(int categoryId) {
-        CategoryEntity category = getByCategoryId(categoryId);
+    public CategoryDTO getCategoryById(int categoryId) {
+        CategoryEntity category = getById(categoryId);
         return categoryMapper.mapEntityToDTO(category);
     }
 
@@ -67,7 +67,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDTO> searchCategoriesByCategoryName(CategorySearchDTO categorySearchDTO) {
+    public List<CategoryDTO> searchCategoriesByName(CategorySearchDTO categorySearchDTO) {
         BooleanBuilder booleanBuilder = booleanBuilderForCategorySearch(categorySearchDTO);
         List<CategoryEntity> categoryList = (List<CategoryEntity>) categoryDAO.findAll(booleanBuilder);
         return categoryMapper.mapEntityListToDTOList(categoryList);
@@ -83,29 +83,20 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<ElementDTO> getAllElementsByCategoryId(int categoryId) {
-        CategoryEntity category = getByCategoryId(categoryId);
-        List<ElementEntity> elementList = elementDAO.getElementEntitiesByCategory(category);
-        return elementMapper.mapEntityListToDTOList(elementList);
+    public List<CategoryDTO> getAllCategoriesByRadarId(int radarId) {
+        RadarEntity radar = radarService.getById(radarId);
+        List<CategoryEntity> categoryList = categoryDAO.getCategoryEntitiesByRadar(radar);
+        return categoryMapper.mapEntityListToDTOList(categoryList);
     }
 
     @Override
-    public CategoryEntity getByCategoryId(int categoryId) {
+    public CategoryEntity getById(int categoryId) {
         return categoryDAO.findById(categoryId).orElseThrow(
                 () -> new ResourceNotFoundException("Category", "ID", categoryId));
     }
 
     @Override
-    public ElementDTO updateElementCategory(int elementId, ElementCategoryUpdateDTO elementCategoryUpdateDTO) {
-        ElementEntity element = elementService.getByElementId(elementId);
-        CategoryEntity category = getByCategoryId(elementCategoryUpdateDTO.getCategoryId());
-        element.setCategory(category);
-        elementMapper.mapCategoryPatchDTOToEntity(elementCategoryUpdateDTO, element);
-        return elementMapper.mapEntityToDTO(elementDAO.save(element));
-    }
-
-    @Override
-    public void deleteCategory(int categoryId) {
+    public void deleteCategoryById(int categoryId) {
         categoryDAO.deleteById(categoryId);
     }
 }

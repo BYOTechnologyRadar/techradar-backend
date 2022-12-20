@@ -1,6 +1,7 @@
 package com.app.techradarbackend.service.impl;
 
 import com.app.techradarbackend.dao.ElementDAO;
+import com.app.techradarbackend.dto.ElementCategoryUpdateDTO;
 import com.app.techradarbackend.dto.ElementCreateDTO;
 import com.app.techradarbackend.dto.ElementDTO;
 import com.app.techradarbackend.dto.ElementSearchDTO;
@@ -15,7 +16,6 @@ import com.app.techradarbackend.service.ElementService;
 import com.querydsl.core.BooleanBuilder;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,9 +26,8 @@ public class ElementServiceImpl implements ElementService {
     private ElementDAO elementDAO;
     private ElementMapper elementMapper;
     private CategoryService categoryService;
-
     @Autowired
-    public ElementServiceImpl(ElementDAO elementDAO, ElementMapper elementMapper, @Lazy CategoryService categoryService) {
+    public ElementServiceImpl(ElementDAO elementDAO, ElementMapper elementMapper, CategoryService categoryService) {
         this.elementDAO = elementDAO;
         this.elementMapper = elementMapper;
         this.categoryService = categoryService;
@@ -37,26 +36,26 @@ public class ElementServiceImpl implements ElementService {
     @Override
     public ElementDTO addElement(ElementCreateDTO elementCreateDTO) {
         ElementEntity element = elementMapper.mapCreateDTOToEntity(elementCreateDTO);
-        CategoryEntity category = categoryService.getByCategoryId(elementCreateDTO.getCategoryId());
+        CategoryEntity category = categoryService.getById(elementCreateDTO.getCategoryId());
         element.setCategory(category);
         return elementMapper.mapEntityToDTO(elementDAO.save(element));
     }
 
     @Override
     public ElementDTO updateElement(int elementId, ElementUpdateDTO elementUpdateDTO) {
-        ElementEntity element = getByElementId(elementId);
+        ElementEntity element = getById(elementId);
         elementMapper.mapUpdateDTOToEntity(elementUpdateDTO, element);
         return elementMapper.mapEntityToDTO(elementDAO.save(element));
     }
 
     @Override
-    public ElementDTO getElementByElementId(int elementId) {
-        ElementEntity element = getByElementId(elementId);
+    public ElementDTO getElementById(int elementId) {
+        ElementEntity element = getById(elementId);
         return elementMapper.mapEntityToDTO(element);
     }
 
     @Override
-    public List<ElementDTO> searchElementByElementName(ElementSearchDTO elementSearchDTO) {
+    public List<ElementDTO> searchElementByName(ElementSearchDTO elementSearchDTO) {
         BooleanBuilder booleanBuilder = booleanBuilderForElementSearch(elementSearchDTO);
         List<ElementEntity> elementList = (List<ElementEntity>) elementDAO.findAll(booleanBuilder);
         return elementMapper.mapEntityListToDTOList(elementList);
@@ -69,14 +68,30 @@ public class ElementServiceImpl implements ElementService {
     }
 
     @Override
-    public void deleteElementByElementId(int elementId) {
+    public List<ElementDTO> getAllElementsByCategoryId(int categoryId) {
+        CategoryEntity category = categoryService.getById(categoryId);
+        List<ElementEntity> elementList = elementDAO.getElementEntitiesByCategory(category);
+        return elementMapper.mapEntityListToDTOList(elementList);
+    }
+
+    @Override
+    public void deleteElementById(int elementId) {
         elementDAO.deleteById(elementId);
     }
 
     @Override
-    public ElementEntity getByElementId(int elementId) {
+    public ElementEntity getById(int elementId) {
         return elementDAO.findById(elementId).orElseThrow(
                 () -> new ResourceNotFoundException("Element", "ID", elementId));
+    }
+
+    @Override
+    public ElementDTO updateElementCategory(int elementId, ElementCategoryUpdateDTO elementCategoryUpdateDTO) {
+        ElementEntity element = getById(elementId);
+        CategoryEntity category = categoryService.getById(elementCategoryUpdateDTO.getCategoryId());
+        element.setCategory(category);
+        elementMapper.mapCategoryPatchDTOToEntity(elementCategoryUpdateDTO, element);
+        return elementMapper.mapEntityToDTO(elementDAO.save(element));
     }
 
     private BooleanBuilder booleanBuilderForElementSearch(ElementSearchDTO elementSearchDTO) {

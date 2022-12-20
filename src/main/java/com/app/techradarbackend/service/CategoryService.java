@@ -2,9 +2,8 @@ package com.app.techradarbackend.service;
 
 import com.app.techradarbackend.dto.CategoryCreateAndUpdateDTO;
 import com.app.techradarbackend.dto.CategoryDTO;
+import com.app.techradarbackend.dto.CategoryRadarUpdateDTO;
 import com.app.techradarbackend.dto.CategorySearchDTO;
-import com.app.techradarbackend.dto.ElementCategoryUpdateDTO;
-import com.app.techradarbackend.dto.ElementDTO;
 import com.app.techradarbackend.entity.CategoryEntity;
 
 import java.util.List;
@@ -12,19 +11,19 @@ import java.util.List;
 public interface CategoryService {
     CategoryDTO addCategory(CategoryCreateAndUpdateDTO categoryCreateDTO);
 
+    CategoryDTO addRadarToCategory(Integer categoryId, CategoryRadarUpdateDTO categoryRadarUpdateDTO);
+
     CategoryDTO updateCategory(int categoryId, CategoryCreateAndUpdateDTO categoryUpdateDTO);
 
-    CategoryDTO getCategoryByCategoryId(int categoryId);
+    CategoryDTO getCategoryById(int categoryId);
 
-    CategoryEntity getByCategoryId(int categoryId);
-
-    ElementDTO updateElementCategory(int elementId, ElementCategoryUpdateDTO elementCategoryUpdateDTO);
+    CategoryEntity getById(int categoryId);
 
     List<CategoryDTO> getAllCategories();
 
-    List<CategoryDTO> searchCategoriesByCategoryName(CategorySearchDTO categorySearchDTO);
+    List<CategoryDTO> searchCategoriesByName(CategorySearchDTO categorySearchDTO);
 
-    List<ElementDTO> getAllElementsByCategoryId(int categoryId);
+    List<CategoryDTO> getAllCategoriesByRadarId(int radarId);
 
-    void deleteCategory(int categoryId);
+    void deleteCategoryById(int categoryId);
 }
