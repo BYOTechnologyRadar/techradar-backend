@@ -12,12 +12,13 @@ import java.util.List;
 public class RadarDataProvider {
     @DataProvider
     public Object[][] getRadarCreateAndUpdateDTOAndRadarEntityAndRadarDTO() {
-        final RadarCreateAndUpdateDTO radarCreateDTO = createRadarCreateAndUpdateDTO();
+        final RadarCreateAndUpdateDTO radarCreateAndUpdateDTO = createRadarCreateAndUpdateDTO();
         final RadarEntity radarEntity = createRadarEntity();
         final RadarDTO radarDTO = createRadarDTO();
 
-        return new Object[][] {{radarCreateDTO, radarEntity, radarDTO}};
+        return new Object[][] {{radarCreateAndUpdateDTO, radarEntity, radarDTO}};
     }
+
     @DataProvider
     public Object[][] getRadarEntityListAndRadarDTOList() {
         final List<RadarEntity> radarEntityList = createRadarEntityList();
@@ -32,6 +33,20 @@ public class RadarDataProvider {
         final RadarDTO radarDTO = createRadarDTO();
 
         return new Object[][] {{radarEntity, radarDTO}};
+    }
+
+    @DataProvider
+    public Object[][] getRadarEntity() {
+        final RadarEntity radarEntity = createRadarEntity();
+
+        return new Object[][] {{ radarEntity }};
+    }
+
+    @DataProvider
+    public Object[][] getRadarCreateDTO() {
+        final RadarCreateAndUpdateDTO radarCreateDTO = createRadarCreateAndUpdateDTO();
+
+        return new Object[][] {{ radarCreateDTO }};
     }
 
     private static RadarEntity createRadarEntity() {
@@ -49,7 +64,6 @@ public class RadarDataProvider {
         radarDTO.setId(1);
         radarDTO.setName("InFiNIT Technology Radar");
         radarDTO.setDescription("A techradar is a visual representation of the technology landscape within a specific organization or field. It typically includes a range of technologies, tools, and platforms, along with their current adoption level and future potential.");
-        radarDTO.setCategorySet(new HashSet<>());
 
         return radarDTO;
     }
@@ -87,14 +101,12 @@ public class RadarDataProvider {
         radarDTO1.setId(1);
         radarDTO1.setName("InFiNIT Technology Radar");
         radarDTO1.setDescription("A techradar is a visual representation of the technology landscape within a specific organization or field. It typically includes a range of technologies, tools, and platforms, along with their current adoption level and future potential.");
-        radarDTO1.setCategorySet(new HashSet<>());
         radarDTOList.add(radarDTO1);
 
         RadarDTO radarDTO2 = new RadarDTO();
         radarDTO2.setId(1);
         radarDTO2.setName("Corp-IT Technology Radar");
         radarDTO2.setDescription("A techradar is a visual representation of the technology landscape within a specific organization or field. It typically includes a range of technologies, tools, and platforms, along with their current adoption level and future potential.");
-        radarDTO2.setCategorySet(new HashSet<>());
         radarDTOList.add(radarDTO2);
 
         return radarDTOList;

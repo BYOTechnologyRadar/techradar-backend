@@ -6,6 +6,7 @@ import com.app.techradarbackend.dto.ElementCreateDTO;
 import com.app.techradarbackend.dto.ElementDTO;
 import com.app.techradarbackend.dto.ElementUpdateDTO;
 import com.app.techradarbackend.entity.ElementEntity;
+import com.app.techradarbackend.exception.ResourceNotFoundException;
 import com.app.techradarbackend.mapper.ElementMapper;
 import com.app.techradarbackend.mapper.ElementMapperImpl;
 import com.app.techradarbackend.service.impl.ElementServiceImpl;
@@ -20,9 +21,12 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertTrue;
 
 public class ElementServiceTests {
     @Mock
@@ -73,16 +77,29 @@ public class ElementServiceTests {
     @Test(dataProvider = "getElementEntityAndElementDTO", dataProviderClass = ElementDataProvider.class)
     public void ES_04_Get_Element_Successful(ElementEntity elementEntity, ElementDTO elementDTO) {
         when(elementDAO.findById(1)).thenReturn(Optional.of(elementEntity));
-        when(elementService.getElementByElementId(1)).thenReturn(elementDTO);
+        when(elementService.getElementById(1)).thenReturn(elementDTO);
 
-        final ElementDTO element = elementService.getElementByElementId(1);
+        final ElementDTO element = elementService.getElementById(1);
         Assert.assertNotNull(element);
     }
 
     @Test
     public void ES_05_Delete_Element_Successful() {
-        elementService.deleteElementByElementId(1);
+        elementService.deleteElementById(1);
 
         verify(elementDAO, times(1)).deleteById(1);
+    }
+
+    @Test(enabled = false, expectedExceptions = ResourceNotFoundException.class)
+    public void ES_06_Get_Element_Throws_ResourceNotFoundException() {
+        try {
+            ElementService elementServiceMock = mock(ElementService.class);
+            when(elementServiceMock.getElementById(anyInt())).thenThrow(ResourceNotFoundException.class);
+
+            elementServiceMock.getElementById(1);
+        } catch (Exception e) {
+            assertTrue(e instanceof ResourceNotFoundException);
+        }
+
     }
 }

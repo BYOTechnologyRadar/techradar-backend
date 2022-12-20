@@ -2,7 +2,6 @@ package com.app.techradarbackend.dataProvider;
 
 import com.app.techradarbackend.dto.CategoryCreateAndUpdateDTO;
 import com.app.techradarbackend.dto.CategoryDTO;
-import com.app.techradarbackend.dto.RadarDTO;
 import com.app.techradarbackend.entity.CategoryEntity;
 import com.app.techradarbackend.entity.RadarEntity;
 import org.testng.annotations.DataProvider;
@@ -36,6 +35,20 @@ public class CategoryDataProvider {
         return new Object[][] {{categoryEntity, categoryDTO}};
     }
 
+    @DataProvider
+    public Object[][] getCategoryEntity() {
+        final CategoryEntity categoryEntity = createCategoryEntity();
+
+        return new Object[][] {{ categoryEntity }};
+    }
+
+    @DataProvider
+    public Object[][] getCategoryCreateDTO() {
+        final CategoryCreateAndUpdateDTO categoryCreateDTO = createCategoryCreateAndUpdateDTO();
+
+        return new Object[][] {{ categoryCreateDTO }};
+    }
+
     private static CategoryEntity createCategoryEntity() {
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setId(1);
@@ -52,8 +65,7 @@ public class CategoryDataProvider {
         categoryDTO.setId(1);
         categoryDTO.setName("Languages & Frameworks");
         categoryDTO.setDescription("We've placed development languages (such as Scala or Golang) here, as well as more low-level development frameworks (such as Play or Symfony), which are useful for implementing custom software of all kinds.");
-        categoryDTO.setRadar(new RadarDTO());
-        categoryDTO.setElementSet(new HashSet<>());
+        categoryDTO.setRadarId(1);
 
         return categoryDTO;
     }
@@ -93,16 +105,14 @@ public class CategoryDataProvider {
         categoryDTO1.setId(1);
         categoryDTO1.setName("Languages & Frameworks");
         categoryDTO1.setDescription("We've placed development languages (such as Scala or Golang) here, as well as more low-level development frameworks (such as Play or Symfony), which are useful for implementing custom software of all kinds.");
-        categoryDTO1.setRadar(new RadarDTO());
-        categoryDTO1.setElementSet(new HashSet<>());
+        categoryDTO1.setRadarId(1);
         categoryDTOList.add(categoryDTO1);
 
         CategoryDTO categoryDTO2 = new CategoryDTO();
         categoryDTO2.setId(1);
         categoryDTO2.setName("Methods & Patterns");
         categoryDTO2.setDescription("Here we put information on methods and patterns concerning development, continuous x, testing, organization, architecture, etc.");
-        categoryDTO2.setRadar(new RadarDTO());
-        categoryDTO2.setElementSet(new HashSet<>());
+        categoryDTO2.setRadarId(1);
         categoryDTOList.add(categoryDTO2);
 
         return categoryDTOList;

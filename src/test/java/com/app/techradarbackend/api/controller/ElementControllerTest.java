@@ -49,7 +49,7 @@ public class ElementControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        verify(elementService, times(1)).getElementByElementId(elementId);
+        verify(elementService, times(1)).getElementById(elementId);
 
     }
 
@@ -62,7 +62,7 @@ public class ElementControllerTest {
                         .header("If-Match", elementId))
                         .andExpect(status().isOk());
 
-        verify(elementService, times(1)).deleteElementByElementId(elementId);
+        verify(elementService, times(1)).deleteElementById(elementId);
 
     }
 }

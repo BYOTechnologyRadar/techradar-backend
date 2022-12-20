@@ -69,15 +69,15 @@ public class CategoryServiceTests {
     @Test(dataProvider = "getCategoryEntityAndCategoryDTO", dataProviderClass = CategoryDataProvider.class)
     public void CS_04_Get_Category_Successful(CategoryEntity categoryEntity, CategoryDTO categoryDTO) {
         when(categoryDAO.findById(1)).thenReturn(Optional.of(categoryEntity));
-        when(categoryService.getCategoryByCategoryId(1)).thenReturn(categoryDTO);
+        when(categoryService.getCategoryById(1)).thenReturn(categoryDTO);
 
-        final CategoryDTO category = categoryService.getCategoryByCategoryId(1);
+        final CategoryDTO category = categoryService.getCategoryById(1);
         Assert.assertNotNull(category);
     }
 
     @Test
     public void CS_05_Delete_Category_Successful() {
-        categoryService.deleteCategory(1);
+        categoryService.deleteCategoryById(1);
 
         verify(categoryDAO, times(1)).deleteById(1);
     }

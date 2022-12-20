@@ -47,11 +47,11 @@ public class RadarServiceTests {
     }
 
     @Test(dataProvider = "getRadarCreateAndUpdateDTOAndRadarEntityAndRadarDTO", dataProviderClass = RadarDataProvider.class)
-    public void CS_02_Update_Radar_Successful(RadarCreateAndUpdateDTO radarCreateAndUpdateDTO, RadarEntity radarEntity, RadarDTO radarDTO) {
+    public void CS_02_Update_Radar_Successful(RadarCreateAndUpdateDTO radarUpdateDTO, RadarEntity radarEntity, RadarDTO radarDTO) {
         when(radarDAO.findById(1)).thenReturn(Optional.of(radarEntity));
-        when(radarService.updateRadar(1, radarCreateAndUpdateDTO)).thenReturn(radarDTO);
+        when(radarService.updateRadar(1, radarUpdateDTO)).thenReturn(radarDTO);
 
-        verify(radarMapper, times(1)).mapUpdateDTOToEntity(radarCreateAndUpdateDTO, radarEntity);
+        verify(radarMapper, times(1)).mapUpdateDTOToEntity(radarUpdateDTO, radarEntity);
     }
 
     @Test(dataProvider = "getRadarEntityListAndRadarDTOList", dataProviderClass = RadarDataProvider.class)
@@ -65,15 +65,15 @@ public class RadarServiceTests {
     @Test(dataProvider = "getRadarEntityAndRadarDTO", dataProviderClass = RadarDataProvider.class)
     public void CS_04_Get_Radar_Successful(RadarEntity radarEntity, RadarDTO radarDTO) {
         when(radarDAO.findById(1)).thenReturn(Optional.of(radarEntity));
-        when(radarService.getRadarByRadarId(1)).thenReturn(radarDTO);
+        when(radarService.getRadarById(1)).thenReturn(radarDTO);
 
-        final RadarDTO radar = radarService.getRadarByRadarId(1);
+        final RadarDTO radar = radarService.getRadarById(1);
         Assert.assertNotNull(radar);
     }
 
     @Test
     public void CS_05_Delete_Radar_Successful() {
-        radarService.deleteRadarByRadarId(1);
+        radarService.deleteRadarById(1);
 
         verify(radarDAO, times(1)).deleteById(1);
     }

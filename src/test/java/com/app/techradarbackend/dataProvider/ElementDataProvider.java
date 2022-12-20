@@ -1,6 +1,5 @@
 package com.app.techradarbackend.dataProvider;
 
-import com.app.techradarbackend.dto.CategoryDTO;
 import com.app.techradarbackend.dto.ElementCreateDTO;
 import com.app.techradarbackend.dto.ElementDTO;
 import com.app.techradarbackend.dto.ElementUpdateDTO;
@@ -49,8 +48,23 @@ public class ElementDataProvider {
         return new Object[][] {{elementEntity, elementDTO}};
     }
 
+    @DataProvider
+    public static Object[][] getElementEntity() {
+        final ElementEntity elementEntity = createElementEntity();
+
+        return new Object[][] {{elementEntity}};
+    }
+
+    @DataProvider
+    public static Object[][] getElementCreateDTO() {
+        final ElementCreateDTO elementCreateDTO = createElementCreateDTO();
+
+        return new Object[][] {{elementCreateDTO}};
+    }
+
     private static ElementEntity createElementEntity() {
         final ElementEntity elementEntity = new ElementEntity();
+        elementEntity.setId(1);
         elementEntity.setName("Java");
         elementEntity.setDescription("Java is a high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.");
         elementEntity.setStatus(ElementStatus.ACTIVE);
@@ -68,7 +82,7 @@ public class ElementDataProvider {
         elementDTO.setStatus(ElementStatus.ACTIVE);
         elementDTO.setVersion(ElementVersion.New);
         elementDTO.setLevel(ElementLevel.ADOPT);
-        elementDTO.setCategory(new CategoryDTO());
+        elementDTO.setId(1);
 
         return elementDTO;
     }
@@ -127,7 +141,7 @@ public class ElementDataProvider {
         elementDTO1.setStatus(ElementStatus.ACTIVE);
         elementDTO1.setVersion(ElementVersion.Changed);
         elementDTO1.setLevel(ElementLevel.ADOPT);
-        elementDTO1.setCategory(new CategoryDTO());
+        elementDTO1.setCategoryId(1);
         elementDTOList.add(elementDTO1);
 
         ElementDTO elementDTO2 = new ElementDTO();
@@ -136,7 +150,7 @@ public class ElementDataProvider {
         elementDTO2.setStatus(ElementStatus.ACTIVE);
         elementDTO2.setVersion(ElementVersion.Unchanged);
         elementDTO2.setLevel(ElementLevel.TRIAL);
-        elementDTO2.setCategory(new CategoryDTO());
+        elementDTO2.setCategoryId(2);
         elementDTOList.add(elementDTO2);
 
         return elementDTOList;
