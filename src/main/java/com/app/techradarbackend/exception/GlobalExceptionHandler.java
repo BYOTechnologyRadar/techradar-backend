@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponse> resourceNotFoundExceptionHandler(ResourceNotFoundException ex, WebRequest webRequest) {
         String message = ex.getMessage();
-        ApiResponse apiResponse = new ApiResponse(LocalDateTime.now(), message, HttpStatus.NOT_FOUND.getReasonPhrase(),webRequest.getDescription(false));
+        ApiResponse apiResponse = new ApiResponse(LocalDateTime.now(), message, HttpStatus.NOT_FOUND.toString(), webRequest.getDescription(false));
         return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
     }
 
