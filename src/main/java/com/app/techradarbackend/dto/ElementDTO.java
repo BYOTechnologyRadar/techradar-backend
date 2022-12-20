@@ -13,5 +13,5 @@ public class ElementDTO {
     private ElementVersion version;
     private ElementStatus status;
     private ElementLevel level;
-    private CategoryDTO category;
+    private Integer categoryId;
 }
