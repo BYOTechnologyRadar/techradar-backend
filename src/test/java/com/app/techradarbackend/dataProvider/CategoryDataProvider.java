@@ -11,44 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 
 public class CategoryDataProvider {
-    @DataProvider
-    public Object[][] getCategoryCreateAndUpdateDTOAndCategoryEntityAndCategoryDTO() {
-        final CategoryCreateAndUpdateDTO categoryCreateDTO = createCategoryCreateAndUpdateDTO();
-        final CategoryEntity categoryEntity = createCategoryEntity();
-        final CategoryDTO categoryDTO = createCategoryDTO();
-
-        return new Object[][] {{categoryCreateDTO, categoryEntity, categoryDTO}};
-    }
-    @DataProvider
-    public Object[][] getCategoryEntityListAndCategoryDTOList() {
-        final List<CategoryEntity> categoryEntityList = createCategoryEntityList();
-        final List<CategoryDTO> categoryDTOList = createCategoryDTOList();
-
-        return new Object[][] {{categoryEntityList, categoryDTOList}};
-    }
-
-    @DataProvider
-    public Object[][] getCategoryEntityAndCategoryDTO() {
-        final CategoryEntity categoryEntity = createCategoryEntity();
-        final CategoryDTO categoryDTO = createCategoryDTO();
-
-        return new Object[][] {{categoryEntity, categoryDTO}};
-    }
-
-    @DataProvider
-    public Object[][] getCategoryEntity() {
-        final CategoryEntity categoryEntity = createCategoryEntity();
-
-        return new Object[][] {{ categoryEntity }};
-    }
-
-    @DataProvider
-    public Object[][] getCategoryCreateDTO() {
-        final CategoryCreateAndUpdateDTO categoryCreateDTO = createCategoryCreateAndUpdateDTO();
-
-        return new Object[][] {{ categoryCreateDTO }};
-    }
-
     private static CategoryEntity createCategoryEntity() {
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setId(1);
@@ -76,6 +38,45 @@ public class CategoryDataProvider {
         categoryCreateAndUpdateDTO.setDescription("We've placed development languages (such as Scala or Golang) here, as well as more low-level development frameworks (such as Play or Symfony), which are useful for implementing custom software of all kinds.");
 
         return categoryCreateAndUpdateDTO;
+    }
+
+    @DataProvider
+    public Object[][] getCategoryCreateAndUpdateDTOAndCategoryEntityAndCategoryDTO() {
+        final CategoryCreateAndUpdateDTO categoryCreateDTO = createCategoryCreateAndUpdateDTO();
+        final CategoryEntity categoryEntity = createCategoryEntity();
+        final CategoryDTO categoryDTO = createCategoryDTO();
+
+        return new Object[][]{{categoryCreateDTO, categoryEntity, categoryDTO}};
+    }
+
+    @DataProvider
+    public Object[][] getCategoryEntityListAndCategoryDTOList() {
+        final List<CategoryEntity> categoryEntityList = createCategoryEntityList();
+        final List<CategoryDTO> categoryDTOList = createCategoryDTOList();
+
+        return new Object[][]{{categoryEntityList, categoryDTOList}};
+    }
+
+    @DataProvider
+    public Object[][] getCategoryEntityAndCategoryDTO() {
+        final CategoryEntity categoryEntity = createCategoryEntity();
+        final CategoryDTO categoryDTO = createCategoryDTO();
+
+        return new Object[][]{{categoryEntity, categoryDTO}};
+    }
+
+    @DataProvider
+    public Object[][] getCategoryEntity() {
+        final CategoryEntity categoryEntity = createCategoryEntity();
+
+        return new Object[][]{{categoryEntity}};
+    }
+
+    @DataProvider
+    public Object[][] getCategoryCreateDTO() {
+        final CategoryCreateAndUpdateDTO categoryCreateDTO = createCategoryCreateAndUpdateDTO();
+
+        return new Object[][]{{categoryCreateDTO}};
     }
 
     private List<CategoryEntity> createCategoryEntityList() {

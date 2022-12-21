@@ -20,7 +20,7 @@ public class ElementDataProvider {
         final ElementEntity elementEntity = createElementEntity();
         final ElementDTO elementDTO = createElementDTO();
 
-        return new Object[][] {{elementCreateDTO, elementEntity, elementDTO}};
+        return new Object[][]{{elementCreateDTO, elementEntity, elementDTO}};
     }
 
     @DataProvider
@@ -29,7 +29,7 @@ public class ElementDataProvider {
         final ElementEntity elementEntity = createElementEntity();
         final ElementDTO elementDTO = createElementDTO();
 
-        return new Object[][] {{elementUpdateDTO, elementEntity, elementDTO}};
+        return new Object[][]{{elementUpdateDTO, elementEntity, elementDTO}};
     }
 
     @DataProvider
@@ -37,7 +37,7 @@ public class ElementDataProvider {
         final List<ElementEntity> elementEntityList = createElementEntityList();
         final List<ElementDTO> elementDTOList = createElementDTOList();
 
-        return new Object[][] {{elementEntityList, elementDTOList}};
+        return new Object[][]{{elementEntityList, elementDTOList}};
     }
 
     @DataProvider
@@ -45,21 +45,21 @@ public class ElementDataProvider {
         final ElementEntity elementEntity = createElementEntity();
         final ElementDTO elementDTO = createElementDTO();
 
-        return new Object[][] {{elementEntity, elementDTO}};
+        return new Object[][]{{elementEntity, elementDTO}};
     }
 
     @DataProvider
     public static Object[][] getElementEntity() {
         final ElementEntity elementEntity = createElementEntity();
 
-        return new Object[][] {{elementEntity}};
+        return new Object[][]{{elementEntity}};
     }
 
     @DataProvider
     public static Object[][] getElementCreateDTO() {
         final ElementCreateDTO elementCreateDTO = createElementCreateDTO();
 
-        return new Object[][] {{elementCreateDTO}};
+        return new Object[][]{{elementCreateDTO}};
     }
 
     private static ElementEntity createElementEntity() {
@@ -155,7 +155,6 @@ public class ElementDataProvider {
 
         return elementDTOList;
     }
-
 
 
 }

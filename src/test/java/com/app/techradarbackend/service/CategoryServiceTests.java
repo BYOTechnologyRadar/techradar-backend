@@ -5,6 +5,7 @@ import com.app.techradarbackend.dataProvider.CategoryDataProvider;
 import com.app.techradarbackend.dto.CategoryCreateAndUpdateDTO;
 import com.app.techradarbackend.dto.CategoryDTO;
 import com.app.techradarbackend.entity.CategoryEntity;
+import com.app.techradarbackend.exception.ResourceNotFoundException;
 import com.app.techradarbackend.mapper.CategoryMapper;
 import com.app.techradarbackend.mapper.CategoryMapperImpl;
 import com.app.techradarbackend.service.impl.CategoryServiceImpl;
@@ -39,8 +40,13 @@ public class CategoryServiceTests {
         MockitoAnnotations.openMocks(this);
     }
 
+    @Test(expectedExceptions = ResourceNotFoundException.class, expectedExceptionsMessageRegExp = ".* Category .*")
+    public void CS_01_Get_Category_Throws_ResourceNotFoundException() throws ResourceNotFoundException {
+        when(categoryService.getCategoryById(1)).thenThrow(ResourceNotFoundException.class);
+    }
+
     @Test(dataProvider = "getCategoryCreateAndUpdateDTOAndCategoryEntityAndCategoryDTO", dataProviderClass = CategoryDataProvider.class)
-    public void CS_01_Add_Category_Successful(CategoryCreateAndUpdateDTO categoryCreateDTO, CategoryEntity categoryEntity, CategoryDTO categoryDTO) {
+    public void CS_02_Add_Category_Successful(CategoryCreateAndUpdateDTO categoryCreateDTO, CategoryEntity categoryEntity, CategoryDTO categoryDTO) {
         when(categoryMapper.mapCreateDTOToEntity(categoryCreateDTO)).thenReturn(categoryEntity);
         when(categoryDAO.save(categoryEntity)).thenReturn(categoryEntity);
         when(categoryService.addCategory(categoryCreateDTO)).thenReturn(categoryDTO);
@@ -51,7 +57,7 @@ public class CategoryServiceTests {
     }
 
     @Test(dataProvider = "getCategoryCreateAndUpdateDTOAndCategoryEntityAndCategoryDTO", dataProviderClass = CategoryDataProvider.class)
-    public void CS_02_Update_Category_Successful(CategoryCreateAndUpdateDTO categoryCreateAndUpdateDTO, CategoryEntity categoryEntity, CategoryDTO categoryDTO) {
+    public void CS_03_Update_Category_Successful(CategoryCreateAndUpdateDTO categoryCreateAndUpdateDTO, CategoryEntity categoryEntity, CategoryDTO categoryDTO) {
         when(categoryDAO.findById(1)).thenReturn(Optional.of(categoryEntity));
         when(categoryService.updateCategory(1, categoryCreateAndUpdateDTO)).thenReturn(categoryDTO);
 
@@ -59,7 +65,7 @@ public class CategoryServiceTests {
     }
 
     @Test(dataProvider = "getCategoryEntityListAndCategoryDTOList", dataProviderClass = CategoryDataProvider.class)
-    public void CS_03_Get_All_Categories_Successful(List<CategoryEntity> categoryEntityList, List<CategoryDTO> categoryDTOList) {
+    public void CS_04_Get_All_Categories_Successful(List<CategoryEntity> categoryEntityList, List<CategoryDTO> categoryDTOList) {
         when(categoryDAO.findAll()).thenReturn(categoryEntityList);
         when(categoryService.getAllCategories()).thenReturn(categoryDTOList);
 
@@ -67,7 +73,7 @@ public class CategoryServiceTests {
     }
 
     @Test(dataProvider = "getCategoryEntityAndCategoryDTO", dataProviderClass = CategoryDataProvider.class)
-    public void CS_04_Get_Category_Successful(CategoryEntity categoryEntity, CategoryDTO categoryDTO) {
+    public void CS_05_Get_Category_Successful(CategoryEntity categoryEntity, CategoryDTO categoryDTO) {
         when(categoryDAO.findById(1)).thenReturn(Optional.of(categoryEntity));
         when(categoryService.getCategoryById(1)).thenReturn(categoryDTO);
 
@@ -76,7 +82,7 @@ public class CategoryServiceTests {
     }
 
     @Test
-    public void CS_05_Delete_Category_Successful() {
+    public void CS_06_Delete_Category_Successful() {
         categoryService.deleteCategoryById(1);
 
         verify(categoryDAO, times(1)).deleteById(1);

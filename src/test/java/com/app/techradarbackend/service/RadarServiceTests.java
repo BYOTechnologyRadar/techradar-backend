@@ -5,6 +5,7 @@ import com.app.techradarbackend.dataProvider.RadarDataProvider;
 import com.app.techradarbackend.dto.RadarCreateAndUpdateDTO;
 import com.app.techradarbackend.dto.RadarDTO;
 import com.app.techradarbackend.entity.RadarEntity;
+import com.app.techradarbackend.exception.ResourceNotFoundException;
 import com.app.techradarbackend.mapper.RadarMapper;
 import com.app.techradarbackend.mapper.RadarMapperImpl;
 import com.app.techradarbackend.service.impl.RadarServiceImpl;
@@ -39,15 +40,20 @@ public class RadarServiceTests {
         MockitoAnnotations.openMocks(this);
     }
 
+    @Test(expectedExceptions = ResourceNotFoundException.class, expectedExceptionsMessageRegExp = ".* Radar .*")
+    public void RS_01_Get_Radar_Throws_ResourceNotFoundException() throws ResourceNotFoundException {
+        when(radarService.getRadarById(1)).thenThrow(ResourceNotFoundException.class);
+    }
+
     @Test(dataProvider = "getRadarCreateAndUpdateDTOAndRadarEntityAndRadarDTO", dataProviderClass = RadarDataProvider.class)
-    public void CS_01_Add_Radar_Successful(RadarCreateAndUpdateDTO radarCreateDTO, RadarEntity radarEntity, RadarDTO radarDTO) {
+    public void RS_02_Add_Radar_Successful(RadarCreateAndUpdateDTO radarCreateDTO, RadarEntity radarEntity, RadarDTO radarDTO) {
         when(radarMapper.mapCreateDTOToEntity(radarCreateDTO)).thenReturn(radarEntity);
         when(radarDAO.save(radarEntity)).thenReturn(radarEntity);
         when(radarMapper.mapEntityToDTO(radarEntity)).thenReturn(radarDTO);
     }
 
     @Test(dataProvider = "getRadarCreateAndUpdateDTOAndRadarEntityAndRadarDTO", dataProviderClass = RadarDataProvider.class)
-    public void CS_02_Update_Radar_Successful(RadarCreateAndUpdateDTO radarUpdateDTO, RadarEntity radarEntity, RadarDTO radarDTO) {
+    public void RS_03_Update_Radar_Successful(RadarCreateAndUpdateDTO radarUpdateDTO, RadarEntity radarEntity, RadarDTO radarDTO) {
         when(radarDAO.findById(1)).thenReturn(Optional.of(radarEntity));
         when(radarService.updateRadar(1, radarUpdateDTO)).thenReturn(radarDTO);
 
@@ -55,7 +61,7 @@ public class RadarServiceTests {
     }
 
     @Test(dataProvider = "getRadarEntityListAndRadarDTOList", dataProviderClass = RadarDataProvider.class)
-    public void CS_03_Get_All_Categories_Successful(List<RadarEntity> radarEntityList, List<RadarDTO> radarDTOList) {
+    public void RS_04_Get_All_Categories_Successful(List<RadarEntity> radarEntityList, List<RadarDTO> radarDTOList) {
         when(radarDAO.findAll()).thenReturn(radarEntityList);
         when(radarService.getAllRadars()).thenReturn(radarDTOList);
 
@@ -63,7 +69,7 @@ public class RadarServiceTests {
     }
 
     @Test(dataProvider = "getRadarEntityAndRadarDTO", dataProviderClass = RadarDataProvider.class)
-    public void CS_04_Get_Radar_Successful(RadarEntity radarEntity, RadarDTO radarDTO) {
+    public void RS_05_Get_Radar_Successful(RadarEntity radarEntity, RadarDTO radarDTO) {
         when(radarDAO.findById(1)).thenReturn(Optional.of(radarEntity));
         when(radarService.getRadarById(1)).thenReturn(radarDTO);
 
@@ -72,7 +78,7 @@ public class RadarServiceTests {
     }
 
     @Test
-    public void CS_05_Delete_Radar_Successful() {
+    public void RS_06_Delete_Radar_Successful() {
         radarService.deleteRadarById(1);
 
         verify(radarDAO, times(1)).deleteById(1);

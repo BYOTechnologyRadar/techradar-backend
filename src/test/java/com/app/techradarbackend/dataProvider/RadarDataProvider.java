@@ -10,45 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 
 public class RadarDataProvider {
-    @DataProvider
-    public Object[][] getRadarCreateAndUpdateDTOAndRadarEntityAndRadarDTO() {
-        final RadarCreateAndUpdateDTO radarCreateAndUpdateDTO = createRadarCreateAndUpdateDTO();
-        final RadarEntity radarEntity = createRadarEntity();
-        final RadarDTO radarDTO = createRadarDTO();
-
-        return new Object[][] {{radarCreateAndUpdateDTO, radarEntity, radarDTO}};
-    }
-
-    @DataProvider
-    public Object[][] getRadarEntityListAndRadarDTOList() {
-        final List<RadarEntity> radarEntityList = createRadarEntityList();
-        final List<RadarDTO> radarDTOList = createRadarDTOList();
-
-        return new Object[][] {{radarEntityList, radarDTOList}};
-    }
-
-    @DataProvider
-    public Object[][] getRadarEntityAndRadarDTO() {
-        final RadarEntity radarEntity = createRadarEntity();
-        final RadarDTO radarDTO = createRadarDTO();
-
-        return new Object[][] {{radarEntity, radarDTO}};
-    }
-
-    @DataProvider
-    public Object[][] getRadarEntity() {
-        final RadarEntity radarEntity = createRadarEntity();
-
-        return new Object[][] {{ radarEntity }};
-    }
-
-    @DataProvider
-    public Object[][] getRadarCreateDTO() {
-        final RadarCreateAndUpdateDTO radarCreateDTO = createRadarCreateAndUpdateDTO();
-
-        return new Object[][] {{ radarCreateDTO }};
-    }
-
     private static RadarEntity createRadarEntity() {
         RadarEntity radarEntity = new RadarEntity();
         radarEntity.setId(1);
@@ -74,6 +35,45 @@ public class RadarDataProvider {
         radarCreateAndUpdateDTO.setDescription("A techradar is a visual representation of the technology landscape within a specific organization or field. It typically includes a range of technologies, tools, and platforms, along with their current adoption level and future potential.");
 
         return radarCreateAndUpdateDTO;
+    }
+
+    @DataProvider
+    public Object[][] getRadarCreateAndUpdateDTOAndRadarEntityAndRadarDTO() {
+        final RadarCreateAndUpdateDTO radarCreateAndUpdateDTO = createRadarCreateAndUpdateDTO();
+        final RadarEntity radarEntity = createRadarEntity();
+        final RadarDTO radarDTO = createRadarDTO();
+
+        return new Object[][]{{radarCreateAndUpdateDTO, radarEntity, radarDTO}};
+    }
+
+    @DataProvider
+    public Object[][] getRadarEntityListAndRadarDTOList() {
+        final List<RadarEntity> radarEntityList = createRadarEntityList();
+        final List<RadarDTO> radarDTOList = createRadarDTOList();
+
+        return new Object[][]{{radarEntityList, radarDTOList}};
+    }
+
+    @DataProvider
+    public Object[][] getRadarEntityAndRadarDTO() {
+        final RadarEntity radarEntity = createRadarEntity();
+        final RadarDTO radarDTO = createRadarDTO();
+
+        return new Object[][]{{radarEntity, radarDTO}};
+    }
+
+    @DataProvider
+    public Object[][] getRadarEntity() {
+        final RadarEntity radarEntity = createRadarEntity();
+
+        return new Object[][]{{radarEntity}};
+    }
+
+    @DataProvider
+    public Object[][] getRadarCreateDTO() {
+        final RadarCreateAndUpdateDTO radarCreateDTO = createRadarCreateAndUpdateDTO();
+
+        return new Object[][]{{radarCreateDTO}};
     }
 
     private List<RadarEntity> createRadarEntityList() {

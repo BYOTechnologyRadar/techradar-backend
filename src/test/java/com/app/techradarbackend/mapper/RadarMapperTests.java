@@ -23,7 +23,7 @@ public class RadarMapperTests {
     }
 
     @Test(dataProvider = "getRadarCreateDTO", dataProviderClass = RadarDataProvider.class)
-    public void CM_02_mapCreateDTOToEntity(final RadarCreateAndUpdateDTO radarCreateDTO) {
+    public void RM_02_mapCreateDTOToEntity(final RadarCreateAndUpdateDTO radarCreateDTO) {
         RadarEntity radarEntity = radarMapper.mapCreateDTOToEntity(radarCreateDTO);
 
         assertEquals(radarEntity.getName(), radarCreateDTO.getName());
