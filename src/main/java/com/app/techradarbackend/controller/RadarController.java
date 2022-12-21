@@ -53,8 +53,8 @@ public class RadarController {
         return radarService.searchRadarsByName(radarSearchDTO);
     }
 
-    @DeleteMapping
-    public void deleteRadarById(Integer radarId) {
+    @DeleteMapping("/{radarId}")
+    public void deleteRadarById(@PathVariable Integer radarId) {
         radarService.deleteRadarById(radarId);
     }
 }
