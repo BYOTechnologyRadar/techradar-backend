@@ -3,6 +3,7 @@ package com.app.techradarbackend.mapper;
 import com.app.techradarbackend.dto.ElementCategoryUpdateDTO;
 import com.app.techradarbackend.dto.ElementCreateDTO;
 import com.app.techradarbackend.dto.ElementDTO;
+import com.app.techradarbackend.dto.ElementInfoDTO;
 import com.app.techradarbackend.dto.ElementLevelUpdateDTO;
 import com.app.techradarbackend.dto.ElementStatusUpdateDTO;
 import com.app.techradarbackend.dto.ElementUpdateDTO;
@@ -16,12 +17,20 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ElementMapper {
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "category", ignore = true)
     @Mapping(target = "category.id", source = "categoryId")
     ElementEntity mapCreateDTOToEntity(ElementCreateDTO elementCreateDTO);
 
-    @Mapping(target = "categoryId", source = "category.id")
     ElementDTO mapEntityToDTO(ElementEntity elementEntity);
+
+    @Mapping(target = "elementDTO.id", source = "id")
+    @Mapping(target = "elementDTO.name", source = "name")
+    @Mapping(target = "elementDTO.level", source = "level")
+    @Mapping(target = "elementDTO.status", source = "status")
+    @Mapping(target = "elementDTO.version", source = "version")
+    @Mapping(target = "categoryId", source = "category.id")
+    ElementInfoDTO mapEntityToInfoDTO(ElementEntity elementEntity);
 
     void mapUpdateDTOToEntity(ElementUpdateDTO elementUpdateDTO, @MappingTarget ElementEntity elementEntity);
 

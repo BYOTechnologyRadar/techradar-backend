@@ -12,7 +12,8 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
-
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "radar", ignore = true)
     @Mapping(target = "elementSet", ignore = true)
     CategoryEntity mapCreateDTOToEntity(CategoryCreateAndUpdateDTO categoryCreateAndUpdateDTO);
 
