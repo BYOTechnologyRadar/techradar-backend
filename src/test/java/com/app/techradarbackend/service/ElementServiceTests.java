@@ -4,6 +4,7 @@ import com.app.techradarbackend.dao.ElementDAO;
 import com.app.techradarbackend.dataProvider.ElementDataProvider;
 import com.app.techradarbackend.dto.ElementCreateDTO;
 import com.app.techradarbackend.dto.ElementDTO;
+import com.app.techradarbackend.dto.ElementInfoDTO;
 import com.app.techradarbackend.dto.ElementUpdateDTO;
 import com.app.techradarbackend.entity.ElementEntity;
 import com.app.techradarbackend.exception.ResourceNotFoundException;
@@ -76,12 +77,12 @@ public class ElementServiceTests {
         verify(elementDAO, times(1)).findAll();
     }
 
-    @Test(dataProvider = "getElementEntityAndElementDTO", dataProviderClass = ElementDataProvider.class)
-    public void ES_05_Get_Element_Successful(ElementEntity elementEntity, ElementDTO elementDTO) {
+    @Test(dataProvider = "getElementEntityAndElementInfoDTO", dataProviderClass = ElementDataProvider.class)
+    public void ES_05_Get_Element_Successful(ElementEntity elementEntity, ElementInfoDTO elementInfoDTO) {
         when(elementDAO.findById(1)).thenReturn(Optional.of(elementEntity));
-        when(elementService.getElementById(1)).thenReturn(elementDTO);
+        when(elementService.getElementById(1)).thenReturn(elementInfoDTO);
 
-        final ElementDTO element = elementService.getElementById(1);
+        final ElementInfoDTO element = elementService.getElementById(1);
         Assert.assertNotNull(element);
     }
 

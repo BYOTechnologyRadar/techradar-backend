@@ -4,6 +4,7 @@ import com.app.techradarbackend.dao.RadarDAO;
 import com.app.techradarbackend.dataProvider.RadarDataProvider;
 import com.app.techradarbackend.dto.RadarCreateAndUpdateDTO;
 import com.app.techradarbackend.dto.RadarDTO;
+import com.app.techradarbackend.dto.RadarInfoDTO;
 import com.app.techradarbackend.entity.RadarEntity;
 import com.app.techradarbackend.exception.ResourceNotFoundException;
 import com.app.techradarbackend.mapper.RadarMapper;
@@ -68,12 +69,12 @@ public class RadarServiceTests {
         verify(radarDAO, times(1)).findAll();
     }
 
-    @Test(dataProvider = "getRadarEntityAndRadarDTO", dataProviderClass = RadarDataProvider.class)
-    public void RS_05_Get_Radar_Successful(RadarEntity radarEntity, RadarDTO radarDTO) {
+    @Test(dataProvider = "getRadarEntityAndRadarInfoDTO", dataProviderClass = RadarDataProvider.class)
+    public void RS_05_Get_Radar_Successful(RadarEntity radarEntity, RadarInfoDTO radarInfoDTO) {
         when(radarDAO.findById(1)).thenReturn(Optional.of(radarEntity));
-        when(radarService.getRadarById(1)).thenReturn(radarDTO);
+        when(radarService.getRadarById(1)).thenReturn(radarInfoDTO);
 
-        final RadarDTO radar = radarService.getRadarById(1);
+        final RadarInfoDTO radar = radarService.getRadarById(1);
         Assert.assertNotNull(radar);
     }
 

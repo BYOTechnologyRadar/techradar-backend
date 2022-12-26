@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CategoryDataProvider {
     private static CategoryEntity createCategoryEntity() {
-        CategoryEntity categoryEntity = new CategoryEntity();
+        final CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setId(1);
         categoryEntity.setName("Languages & Frameworks");
         categoryEntity.setDescription("We've placed development languages (such as Scala or Golang) here, as well as more low-level development frameworks (such as Play or Symfony), which are useful for implementing custom software of all kinds.");
@@ -23,17 +23,16 @@ public class CategoryDataProvider {
     }
 
     private static CategoryDTO createCategoryDTO() {
-        CategoryDTO categoryDTO = new CategoryDTO();
+        final CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setId(1);
         categoryDTO.setName("Languages & Frameworks");
         categoryDTO.setDescription("We've placed development languages (such as Scala or Golang) here, as well as more low-level development frameworks (such as Play or Symfony), which are useful for implementing custom software of all kinds.");
-        categoryDTO.setRadarId(1);
 
         return categoryDTO;
     }
 
     private static CategoryCreateAndUpdateDTO createCategoryCreateAndUpdateDTO() {
-        CategoryCreateAndUpdateDTO categoryCreateAndUpdateDTO = new CategoryCreateAndUpdateDTO();
+        final CategoryCreateAndUpdateDTO categoryCreateAndUpdateDTO = new CategoryCreateAndUpdateDTO();
         categoryCreateAndUpdateDTO.setName("Languages & Frameworks");
         categoryCreateAndUpdateDTO.setDescription("We've placed development languages (such as Scala or Golang) here, as well as more low-level development frameworks (such as Play or Symfony), which are useful for implementing custom software of all kinds.");
 
@@ -80,8 +79,8 @@ public class CategoryDataProvider {
     }
 
     private List<CategoryEntity> createCategoryEntityList() {
-        List<CategoryEntity> categoryEntityList = new ArrayList<>();
-        CategoryEntity categoryEntity1 = new CategoryEntity();
+        final List<CategoryEntity> categoryEntityList = new ArrayList<>();
+        final CategoryEntity categoryEntity1 = new CategoryEntity();
         categoryEntity1.setId(1);
         categoryEntity1.setName("Languages & Frameworks");
         categoryEntity1.setDescription("We've placed development languages (such as Scala or Golang) here, as well as more low-level development frameworks (such as Play or Symfony), which are useful for implementing custom software of all kinds.");
@@ -89,7 +88,7 @@ public class CategoryDataProvider {
         categoryEntity1.setElementSet(new HashSet<>());
         categoryEntityList.add(categoryEntity1);
 
-        CategoryEntity categoryEntity2 = new CategoryEntity();
+        final CategoryEntity categoryEntity2 = new CategoryEntity();
         categoryEntity2.setId(1);
         categoryEntity2.setName("Methods & Patterns");
         categoryEntity2.setDescription("Here we put information on methods and patterns concerning development, continuous x, testing, organization, architecture, etc.");
@@ -101,19 +100,17 @@ public class CategoryDataProvider {
     }
 
     private List<CategoryDTO> createCategoryDTOList() {
-        List<CategoryDTO> categoryDTOList = new ArrayList<>();
-        CategoryDTO categoryDTO1 = new CategoryDTO();
+        final List<CategoryDTO> categoryDTOList = new ArrayList<>();
+        final CategoryDTO categoryDTO1 = new CategoryDTO();
         categoryDTO1.setId(1);
         categoryDTO1.setName("Languages & Frameworks");
         categoryDTO1.setDescription("We've placed development languages (such as Scala or Golang) here, as well as more low-level development frameworks (such as Play or Symfony), which are useful for implementing custom software of all kinds.");
-        categoryDTO1.setRadarId(1);
         categoryDTOList.add(categoryDTO1);
 
-        CategoryDTO categoryDTO2 = new CategoryDTO();
+        final CategoryDTO categoryDTO2 = new CategoryDTO();
         categoryDTO2.setId(1);
         categoryDTO2.setName("Methods & Patterns");
         categoryDTO2.setDescription("Here we put information on methods and patterns concerning development, continuous x, testing, organization, architecture, etc.");
-        categoryDTO2.setRadarId(1);
         categoryDTOList.add(categoryDTO2);
 
         return categoryDTOList;

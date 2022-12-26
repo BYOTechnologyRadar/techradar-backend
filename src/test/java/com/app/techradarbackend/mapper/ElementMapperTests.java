@@ -23,8 +23,6 @@ public class ElementMapperTests {
         assertEquals(elementDTO.getLevel(), elementEntity.getLevel());
         assertEquals(elementDTO.getStatus(), elementEntity.getStatus());
         assertEquals(elementDTO.getVersion(), elementEntity.getVersion());
-        assertEquals(elementDTO.getDescription(), elementEntity.getDescription());
-        assertEquals(elementDTO.getCategoryId(), elementEntity.getCategory().getId());
     }
 
     @Test(dataProvider = "getElementCreateDTO", dataProviderClass = ElementDataProvider.class)
@@ -35,8 +33,8 @@ public class ElementMapperTests {
         assertEquals(elementEntity.getLevel(), elementCreateDTO.getLevel());
         assertEquals(elementEntity.getStatus(), elementCreateDTO.getStatus());
         assertEquals(elementEntity.getVersion(), elementCreateDTO.getVersion());
-        assertEquals(elementEntity.getCategory().getId(), elementCreateDTO.getCategoryId());
         assertEquals(elementEntity.getDescription(), elementCreateDTO.getDescription());
+        assertEquals(elementEntity.getCategory().getId(), elementCreateDTO.getCategoryId());
     }
 
 

@@ -4,6 +4,7 @@ import com.app.techradarbackend.controller.RadarController;
 import com.app.techradarbackend.dao.RadarDAO;
 import com.app.techradarbackend.dto.RadarCreateAndUpdateDTO;
 import com.app.techradarbackend.dto.RadarDTO;
+import com.app.techradarbackend.dto.RadarInfoDTO;
 import com.app.techradarbackend.service.RadarService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.HashSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -81,14 +84,17 @@ public class RadarControllerTests {
 
     @Test
     public void RC_03_Get_Radar_Successful() throws Exception {
-        RadarDTO mockRadar = new RadarDTO();
-        mockRadar.setId(1);
-        mockRadar.setName("InFiNIT Technology Radar");
-        mockRadar.setDescription("A techradar is a visual representation of the technology landscape within a specific organization or field. It typically includes a range of technologies, tools, and platforms, along with their current adoption level and future potential.");
+        RadarInfoDTO mockRadarInfoDTO = new RadarInfoDTO();
+        RadarDTO mockRadarDTO = new RadarDTO();
+        mockRadarDTO.setId(1);
+        mockRadarDTO.setName("InFiNIT Technology Radar");
+        mockRadarDTO.setDescription("A techradar is a visual representation of the technology landscape within a specific organization or field. It typically includes a range of technologies, tools, and platforms, along with their current adoption level and future potential.");
+        mockRadarInfoDTO.setRadarDTO(mockRadarDTO);
+        mockRadarInfoDTO.setCategorySet(new HashSet<>());
 
         String URI = "/radars/1";
 
-        when(radarService.getRadarById(anyInt())).thenReturn(mockRadar);
+        when(radarService.getRadarById(anyInt())).thenReturn(mockRadarInfoDTO);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get(URI)
@@ -98,7 +104,7 @@ public class RadarControllerTests {
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
-        String expectedJson = this.mapToJson(mockRadar);
+        String expectedJson = this.mapToJson(mockRadarInfoDTO);
         String outputInJson = response.getContentAsString();
 
         assertThat(outputInJson).isEqualTo(expectedJson);

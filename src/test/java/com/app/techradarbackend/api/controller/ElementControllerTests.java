@@ -4,6 +4,7 @@ import com.app.techradarbackend.controller.ElementController;
 import com.app.techradarbackend.dao.ElementDAO;
 import com.app.techradarbackend.dto.ElementCreateDTO;
 import com.app.techradarbackend.dto.ElementDTO;
+import com.app.techradarbackend.dto.ElementInfoDTO;
 import com.app.techradarbackend.enums.ElementLevel;
 import com.app.techradarbackend.enums.ElementStatus;
 import com.app.techradarbackend.enums.ElementVersion;
@@ -59,19 +60,25 @@ public class ElementControllerTests {
 
     @Test
     public void EC_02_Add_Element_Successful() throws Exception {
-        ElementDTO mockElement = new ElementDTO();
-        mockElement.setId(1);
-        mockElement.setName("Java");
-        mockElement.setDescription("Java is a high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.");
-        mockElement.setStatus(ElementStatus.ACTIVE);
-        mockElement.setVersion(ElementVersion.New);
-        mockElement.setLevel(ElementLevel.ADOPT);
-        mockElement.setCategoryId(1);
+        ElementCreateDTO elementCreateDTO = new ElementCreateDTO();
+        elementCreateDTO.setName("Java");
+        elementCreateDTO.setLevel(ElementLevel.ADOPT);
+        elementCreateDTO.setVersion(ElementVersion.New);
+        elementCreateDTO.setStatus(ElementStatus.ACTIVE);
+        elementCreateDTO.setCategoryId(1);
+        elementCreateDTO.setDescription("Java is a high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.");
 
-        String inputInJson = this.mapToJson(mockElement);
+        ElementDTO mockElementDTO = new ElementDTO();
+        mockElementDTO.setId(1);
+        mockElementDTO.setName("Java");
+        mockElementDTO.setStatus(ElementStatus.ACTIVE);
+        mockElementDTO.setVersion(ElementVersion.New);
+        mockElementDTO.setLevel(ElementLevel.ADOPT);
+
+        String inputInJson = this.mapToJson(elementCreateDTO);
         String URI = "/elements";
 
-        when(elementService.addElement(any(ElementCreateDTO.class))).thenReturn(mockElement);
+        when(elementService.addElement(any(ElementCreateDTO.class))).thenReturn(mockElementDTO);
 
         RequestBuilder requestBuilder = post(URI)
                 .accept(MediaType.APPLICATION_JSON).content(inputInJson)
@@ -80,24 +87,23 @@ public class ElementControllerTests {
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
-        String outputInJson = response.getContentAsString();
-
-        assertThat(outputInJson).isEqualTo(inputInJson);
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
     @Test
     public void EC_03_Get_Element_Successful() throws Exception {
-        ElementDTO mockElement = new ElementDTO();
-        mockElement.setId(1);
-        mockElement.setName("Java");
-        mockElement.setDescription("Java is a high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.");
-        mockElement.setStatus(ElementStatus.ACTIVE);
-        mockElement.setVersion(ElementVersion.New);
-        mockElement.setLevel(ElementLevel.ADOPT);
-        mockElement.setCategoryId(1);
+        ElementInfoDTO mockElementInfoDTO = new ElementInfoDTO();
+        ElementDTO mockElementDTO = new ElementDTO();
+        mockElementDTO.setId(1);
+        mockElementDTO.setName("Java");
+        mockElementInfoDTO.setCategoryId(1);
+        mockElementDTO.setLevel(ElementLevel.ADOPT);
+        mockElementDTO.setVersion(ElementVersion.New);
+        mockElementDTO.setStatus(ElementStatus.ACTIVE);
+        mockElementInfoDTO.setElementDTO(mockElementDTO);
+        mockElementInfoDTO.setDescription("Java is a high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.");
 
-        when(elementService.getElementById(anyInt())).thenReturn(mockElement);
+        when(elementService.getElementById(anyInt())).thenReturn(mockElementInfoDTO);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/elements/1")
@@ -107,7 +113,7 @@ public class ElementControllerTests {
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
-        String expectedJson = this.mapToJson(mockElement);
+        String expectedJson = this.mapToJson(mockElementInfoDTO);
         String outputInJson = response.getContentAsString();
 
         assertThat(outputInJson).isEqualTo(expectedJson);

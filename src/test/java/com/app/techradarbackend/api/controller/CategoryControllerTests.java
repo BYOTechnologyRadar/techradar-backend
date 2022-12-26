@@ -21,6 +21,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.HashSet;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -56,16 +58,15 @@ public class CategoryControllerTests {
 
     @Test
     public void CC_02_Add_Category_Successful() throws Exception {
-        CategoryDTO mockCategory = new CategoryDTO();
-        mockCategory.setId(1);
-        mockCategory.setName("Languages & Frameworks");
-        mockCategory.setDescription("We've placed development languages (such as Scala or Golang) here, as well as more low-level development frameworks (such as Play or Symfony), which are useful for implementing custom software of all kinds.");
-        mockCategory.setRadarId(1);
+        CategoryDTO mockCategoryDTO = new CategoryDTO();
+        mockCategoryDTO.setId(1);
+        mockCategoryDTO.setName("Languages & Frameworks");
+        mockCategoryDTO.setDescription("We've placed development languages (such as Scala or Golang) here, as well as more low-level development frameworks (such as Play or Symfony), which are useful for implementing custom software of all kinds.");
 
-        String inputInJson = this.mapToJson(mockCategory);
+        String inputInJson = this.mapToJson(mockCategoryDTO);
         String URI = "/categories";
 
-        when(categoryService.addCategory(any(CategoryCreateAndUpdateDTO.class))).thenReturn(mockCategory);
+        when(categoryService.addCategory(any(CategoryCreateAndUpdateDTO.class))).thenReturn(mockCategoryDTO);
 
         RequestBuilder requestBuilder = post(URI)
                 .accept(MediaType.APPLICATION_JSON).content(inputInJson)
@@ -82,15 +83,16 @@ public class CategoryControllerTests {
 
     @Test
     public void CC_03_Get_Category_Successful() throws Exception {
-        CategoryDTO mockCategory = new CategoryDTO();
-        mockCategory.setId(1);
-        mockCategory.setName("Languages & Frameworks");
-        mockCategory.setDescription("We've placed development languages (such as Scala or Golang) here, as well as more low-level development frameworks (such as Play or Symfony), which are useful for implementing custom software of all kinds.");
-        mockCategory.setRadarId(1);
+        CategoryDTO mockCategoryDTO = new CategoryDTO();
+        mockCategoryDTO.setId(1);
+        mockCategoryDTO.setName("Languages & Frameworks");
+        mockCategoryDTO.setDescription("We've placed development languages (such as Scala or Golang) here, as well as more low-level development frameworks (such as Play or Symfony), which are useful for implementing custom software of all kinds.");
+        mockCategoryDTO.setElementSet(new HashSet<>());
+        mockCategoryDTO.setRadarId(1);
 
         String URI = "/categories/1";
 
-        when(categoryService.getCategoryById(anyInt())).thenReturn(mockCategory);
+        when(categoryService.getCategoryById(anyInt())).thenReturn(mockCategoryDTO);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get(URI)
@@ -100,7 +102,7 @@ public class CategoryControllerTests {
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
-        String expectedJson = this.mapToJson(mockCategory);
+        String expectedJson = this.mapToJson(mockCategoryDTO);
         String outputInJson = response.getContentAsString();
 
         assertThat(outputInJson).isEqualTo(expectedJson);
