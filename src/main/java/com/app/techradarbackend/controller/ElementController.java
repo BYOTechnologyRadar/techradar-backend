@@ -4,6 +4,7 @@ import com.app.techradarbackend.configuration.SwaggerConfiguration;
 import com.app.techradarbackend.dto.ElementCategoryUpdateDTO;
 import com.app.techradarbackend.dto.ElementCreateDTO;
 import com.app.techradarbackend.dto.ElementDTO;
+import com.app.techradarbackend.dto.ElementInfoDTO;
 import com.app.techradarbackend.dto.ElementSearchDTO;
 import com.app.techradarbackend.dto.ElementUpdateDTO;
 import com.app.techradarbackend.service.ElementService;
@@ -42,7 +43,7 @@ public class ElementController {
     }
 
     @GetMapping("/{elementId}")
-    public ElementDTO getElementById(@PathVariable int elementId) {
+    public ElementInfoDTO getElementById(@PathVariable int elementId) {
         return elementService.getElementById(elementId);
     }
 
@@ -65,6 +66,7 @@ public class ElementController {
     List<ElementDTO> getAllElementsByCategoryId(@PathVariable Integer categoryId) {
         return elementService.getAllElementsByCategoryId(categoryId);
     }
+
     @DeleteMapping("/{elementId}")
     public void deleteElementByElementId(@PathVariable int elementId) {
         elementService.deleteElementById(elementId);

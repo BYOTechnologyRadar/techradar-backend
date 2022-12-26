@@ -29,6 +29,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public class CategoryController {
     private final CategoryService categoryService;
+
     @PostMapping
     public CategoryDTO addCategory(@Valid @RequestBody CategoryCreateAndUpdateDTO categoryCreateDTO) {
         return categoryService.addCategory(categoryCreateDTO);

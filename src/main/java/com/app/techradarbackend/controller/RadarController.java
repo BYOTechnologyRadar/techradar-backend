@@ -3,6 +3,7 @@ package com.app.techradarbackend.controller;
 import com.app.techradarbackend.configuration.SwaggerConfiguration;
 import com.app.techradarbackend.dto.RadarCreateAndUpdateDTO;
 import com.app.techradarbackend.dto.RadarDTO;
+import com.app.techradarbackend.dto.RadarInfoDTO;
 import com.app.techradarbackend.dto.RadarSearchDTO;
 import com.app.techradarbackend.service.RadarService;
 import io.swagger.annotations.Api;
@@ -39,7 +40,7 @@ public class RadarController {
     }
 
     @GetMapping("/{radarId}")
-    public RadarDTO getRadarById(@PathVariable Integer radarId) {
+    public RadarInfoDTO getRadarById(@PathVariable Integer radarId) {
         return radarService.getRadarById(radarId);
     }
 
