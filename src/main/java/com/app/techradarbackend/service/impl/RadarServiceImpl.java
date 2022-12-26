@@ -3,6 +3,7 @@ package com.app.techradarbackend.service.impl;
 import com.app.techradarbackend.dao.RadarDAO;
 import com.app.techradarbackend.dto.RadarCreateAndUpdateDTO;
 import com.app.techradarbackend.dto.RadarDTO;
+import com.app.techradarbackend.dto.RadarInfoDTO;
 import com.app.techradarbackend.dto.RadarSearchDTO;
 import com.app.techradarbackend.entity.QRadarEntity;
 import com.app.techradarbackend.entity.RadarEntity;
@@ -21,6 +22,7 @@ import java.util.List;
 public class RadarServiceImpl implements RadarService {
     private RadarDAO radarDAO;
     private RadarMapper radarMapper;
+
     @Autowired
     public RadarServiceImpl(RadarDAO radarDAO, RadarMapper radarMapper) {
         this.radarDAO = radarDAO;
@@ -42,9 +44,9 @@ public class RadarServiceImpl implements RadarService {
     }
 
     @Override
-    public RadarDTO getRadarById(int radarId) {
+    public RadarInfoDTO getRadarById(int radarId) {
         RadarEntity radar = getById(radarId);
-        return radarMapper.mapEntityToDTO(radar);
+        return radarMapper.mapEntityToInfoDTO(radar);
     }
 
     @Override

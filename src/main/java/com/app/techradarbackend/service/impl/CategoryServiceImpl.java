@@ -25,6 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryDAO categoryDAO;
     private CategoryMapper categoryMapper;
     private RadarService radarService;
+
     @Autowired
     public CategoryServiceImpl(CategoryDAO categoryDAO, CategoryMapper categoryMapper, RadarService radarService) {
         this.categoryDAO = categoryDAO;

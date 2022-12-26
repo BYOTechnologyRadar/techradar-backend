@@ -2,6 +2,7 @@ package com.app.techradarbackend.service;
 
 import com.app.techradarbackend.dto.RadarCreateAndUpdateDTO;
 import com.app.techradarbackend.dto.RadarDTO;
+import com.app.techradarbackend.dto.RadarInfoDTO;
 import com.app.techradarbackend.dto.RadarSearchDTO;
 import com.app.techradarbackend.entity.RadarEntity;
 
@@ -12,7 +13,7 @@ public interface RadarService {
 
     RadarDTO updateRadar(int radarId, RadarCreateAndUpdateDTO radarUpdateDTO);
 
-    RadarDTO getRadarById(int radarId);
+    RadarInfoDTO getRadarById(int radarId);
 
     RadarEntity getById(int radarId);
 

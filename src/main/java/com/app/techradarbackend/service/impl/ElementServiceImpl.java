@@ -4,6 +4,7 @@ import com.app.techradarbackend.dao.ElementDAO;
 import com.app.techradarbackend.dto.ElementCategoryUpdateDTO;
 import com.app.techradarbackend.dto.ElementCreateDTO;
 import com.app.techradarbackend.dto.ElementDTO;
+import com.app.techradarbackend.dto.ElementInfoDTO;
 import com.app.techradarbackend.dto.ElementSearchDTO;
 import com.app.techradarbackend.dto.ElementUpdateDTO;
 import com.app.techradarbackend.entity.CategoryEntity;
@@ -26,6 +27,7 @@ public class ElementServiceImpl implements ElementService {
     private ElementDAO elementDAO;
     private ElementMapper elementMapper;
     private CategoryService categoryService;
+
     @Autowired
     public ElementServiceImpl(ElementDAO elementDAO, ElementMapper elementMapper, CategoryService categoryService) {
         this.elementDAO = elementDAO;
@@ -49,9 +51,9 @@ public class ElementServiceImpl implements ElementService {
     }
 
     @Override
-    public ElementDTO getElementById(int elementId) {
+    public ElementInfoDTO getElementById(int elementId) {
         ElementEntity element = getById(elementId);
-        return elementMapper.mapEntityToDTO(element);
+        return elementMapper.mapEntityToInfoDTO(element);
     }
 
     @Override
