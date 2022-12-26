@@ -9,9 +9,7 @@ import lombok.Data;
 public class ElementDTO {
     private Integer id;
     private String name;
-    private String description;
-    private ElementVersion version;
-    private ElementStatus status;
     private ElementLevel level;
-    private Integer categoryId;
+    private ElementStatus status;
+    private ElementVersion version;
 }
